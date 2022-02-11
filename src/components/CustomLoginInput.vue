@@ -9,8 +9,8 @@
 export default {
         name: "CustomLoginInput",
         props: {
-                label: "",
-                modelValue: "",
+                label: String,
+                modelValue: String,
         },
         computed: {
                 inputValue: {

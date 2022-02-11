@@ -1,7 +1,7 @@
 <template>
         <footer>
                 <p>2022</p>
-                <router-link to="/about">About</router-link>
+                <router-link to="/about">À propos</router-link>
         </footer>
 </template>
 

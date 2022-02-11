@@ -11,23 +11,25 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button>Log in</button>
+                <button>Sign up</button>
+                <p>{{ data.message }}</p>
         </form>
 </template>
 
 <script>
 import CustomLoginInput from "../components/CustomLoginInput";
 export default {
-        name: "Login",
+        name: "Signup",
         components: { CustomLoginInput },
         data() {
                 return {
-                        title: "Login",
+                        title: "Sign up",
                         email: "",
                         password: "",
                         emailLabel: "Email",
                         passwordLabel: "Password",
                         userX: [],
+                        data: {},
                 };
         },
         methods: {
@@ -39,7 +41,7 @@ export default {
                         let userJSON = JSON.stringify(user);
                         console.log(userJSON);
                         const res = await fetch(
-                                "http://localhost:3000/api/user/login",
+                                "http://localhost:3000/api/user/signup",
                                 {
                                         method: "POST",
                                         headers: {
@@ -50,7 +52,7 @@ export default {
                                 }
                         );
                         const data = await res.json();
-                        this.userX.push(data.token);
+                        console.log(data.message);
                 },
         },
 };

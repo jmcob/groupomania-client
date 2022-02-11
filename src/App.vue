@@ -1,5 +1,6 @@
 <template>
-        <img alt="Vue logo" src="./assets/logo.png" />
+        <img class="logo" alt="Vue logo" src="./assets/icon.svg" />
+        <br />
         <router-view></router-view>
         <Footer />
 </template>
@@ -23,5 +24,8 @@ export default {
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+}
+.logo {
+        width: 100px;
 }
 </style>
