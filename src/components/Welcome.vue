@@ -1,5 +1,5 @@
 <template>
-        <h2>Bienvenue</h2>
+        <h1>Bienvenue sur Groupomania</h1>
 </template>
 
 <script></script>

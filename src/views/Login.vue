@@ -11,7 +11,9 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button @click="$emit('submitted', data.userId)">Log in</button>
+                <button @click="$emit('submitted', data.userId)">
+                        {{ title }}
+                </button>
         </form>
 </template>
 
@@ -23,11 +25,11 @@ export default {
         components: { CustomLoginInput },
         data() {
                 return {
-                        title: "Login",
+                        title: "Connexion",
                         email: "",
                         password: "",
-                        emailLabel: "Email",
-                        passwordLabel: "Password",
+                        emailLabel: "Email :",
+                        passwordLabel: "Mot de passe :",
                         userX: [],
                         data: Object,
                 };

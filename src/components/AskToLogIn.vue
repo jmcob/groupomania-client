@@ -1,6 +1,6 @@
 <template>
         <p>
-                Please <router-link to="/login">Log in</router-link> or
-                <router-link to="/signup">Signup</router-link>
+                <router-link to="/login"> Connectez-vous</router-link> ou
+                <router-link to="/signup">inscrivez-vous</router-link>
         </p>
 </template>

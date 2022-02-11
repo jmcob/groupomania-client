@@ -11,8 +11,7 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button>Sign up</button>
-                <p>{{ data.message }}</p>
+                <button>{{ title }}</button>
         </form>
 </template>
 
@@ -23,11 +22,11 @@ export default {
         components: { CustomLoginInput },
         data() {
                 return {
-                        title: "Sign up",
+                        title: "Inscription",
                         email: "",
                         password: "",
-                        emailLabel: "Email",
-                        passwordLabel: "Password",
+                        emailLabel: "Email :",
+                        passwordLabel: "Mot de passe :",
                         userX: [],
                         data: {},
                 };

@@ -1,6 +1,6 @@
 <template>
-        <AskToLogIn />
         <Welcome />
+        <AskToLogIn />
 </template>
 
 <script>
