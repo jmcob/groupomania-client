@@ -11,12 +11,13 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button>Log in</button>
+                <button @click="$emit('submitted', data.userId)">Log in</button>
         </form>
 </template>
 
 <script>
 import CustomLoginInput from "../components/CustomLoginInput";
+
 export default {
         name: "Login",
         components: { CustomLoginInput },
@@ -28,6 +29,7 @@ export default {
                         emailLabel: "Email",
                         passwordLabel: "Password",
                         userX: [],
+                        data: Object,
                 };
         },
         methods: {
@@ -50,7 +52,12 @@ export default {
                                 }
                         );
                         const data = await res.json();
-                        this.userX.push(data.token);
+                        if (data.userId) {
+                                console.log(
+                                        data.userId + " utilisateur loggé !"
+                                );
+                                this.$router.push("/");
+                        }
                 },
         },
 };
