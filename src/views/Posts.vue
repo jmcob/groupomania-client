@@ -3,7 +3,9 @@
 
         <br />
 
-        <AllPosts />
+        <AllPosts v-for="post in posts" :key="post.id" :title="post.title">
+        </AllPosts>
+
         <br />
 
         <router-link to="/">Page d'accueil</router-link>
@@ -22,11 +24,11 @@ export default {
         },
         methods: {
                 async getPosts() {
-                        const res = await fetch(
-                                "http://localthost:3000/api/post/"
-                        );
-                        const data = await res.json();
-                        return data;
+                        await fetch("http://localhost:3000/api/post/")
+                                .then((res) => res.json())
+                                .then((data) => {
+                                        return data;
+                                });
                 },
         },
         async created() {
