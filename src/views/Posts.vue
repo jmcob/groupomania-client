@@ -3,8 +3,7 @@
 
         <br />
 
-        <AllPosts v-for="post in posts" :key="post.id" :title="post.title">
-        </AllPosts>
+        <div v-for="post in posts" :key="post.id">{{ post.title }}</div>
 
         <br />
 
@@ -12,11 +11,11 @@
 </template>
 
 <script>
-import AllPosts from "../components/AllPosts";
+// import AllPosts from "../components/AllPosts";
 
 export default {
         name: "Posts",
-        components: { AllPosts },
+        // components: { AllPosts },
         data() {
                 return {
                         posts: [],
@@ -33,6 +32,7 @@ export default {
         },
         async created() {
                 this.posts = await this.getPosts();
+                console.log(this.posts);
         },
 };
 </script>
