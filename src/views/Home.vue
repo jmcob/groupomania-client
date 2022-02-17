@@ -1,6 +1,7 @@
 <template>
         <Welcome />
         <AskToLogIn />
+        <router-link to="/posts">Posts</router-link>
 </template>
 
 <script>
