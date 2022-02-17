@@ -3,6 +3,7 @@ import Home from "../views/Home";
 import Login from "../views/Login";
 import Signup from "../views/Signup";
 import About from "../views/About";
+import Posts from "../views/Posts";
 
 const routes = [
         {

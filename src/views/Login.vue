@@ -15,6 +15,8 @@
                         {{ title }}
                 </button>
         </form>
+        <br />
+        <router-link to="/">Page d'accueil</router-link>
 </template>
 
 <script>
