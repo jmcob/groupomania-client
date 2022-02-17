@@ -1,5 +1,6 @@
 <template>
-        <p>Yes !</p>
+        <Allposts />
+        <p>Re-Yes !</p>
 </template>
 
 <script>
