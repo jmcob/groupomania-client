@@ -1,7 +1,7 @@
 <template>
         <Welcome />
         <AskToLogIn />
-        <router-link to="/posts">Posts</router-link>
+        <router-link to="/posts">View all posts</router-link>
 </template>
 
 <script>

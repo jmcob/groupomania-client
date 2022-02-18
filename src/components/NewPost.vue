@@ -6,15 +6,18 @@
                                 type="text"
                                 v-model="title"
                                 :label="titleLabel"
-                                placeholder="Titre du post"
+                                placeholder="Titre de votre post"
                         />
                         <br />
-                        <input
+                        <textarea
+                                rows="4"
+                                cols="50"
                                 type="text"
                                 v-model="text"
                                 :label="textLabel"
-                                placeholder="Texte du post"
-                        />
+                                placeholder="Texte de votre post."
+                        >
+                        </textarea>
                         <br />
 
                         <button>

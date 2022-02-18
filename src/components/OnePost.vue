@@ -6,7 +6,7 @@ export default {
 </script>
 
 <template>
-        <div id="posts">
+        <div id="onepost">
                 <h2 class="title">{{ post.title }}</h2>
                 <h3 class="userId">by user (ID) : {{ post.userId }}</h3>
                 <p class="text">{{ post.text }}</p>
@@ -16,7 +16,7 @@ export default {
 </template>
 
 <style scoped>
-#posts {
+#onepost {
         width: 50%;
         border: 1px solid black;
         margin: 5px;

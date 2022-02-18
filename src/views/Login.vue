@@ -41,9 +41,11 @@ export default {
                                 email: this.email,
                                 password: this.password,
                         };
+                        this.$emit("login", user);
+
                         let userJSON = JSON.stringify(user);
                         console.log(userJSON);
-                        const res = await fetch(
+                        const data = await fetch(
                                 "http://localhost:3000/api/user/login",
                                 {
                                         method: "POST",
@@ -53,8 +55,12 @@ export default {
                                         },
                                         body: userJSON,
                                 }
-                        );
-                        const data = await res.json();
+                        ).then((res) => {
+                                return res.json();
+                        });
+                        // .then((data) => {
+                        //         return data;
+                        // });
                         if (data.userId) {
                                 console.log(
                                         data.userId + " utilisateur loggé !"
