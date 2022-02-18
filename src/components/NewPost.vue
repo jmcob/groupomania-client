@@ -11,11 +11,11 @@
                         <br />
                         <textarea
                                 rows="4"
-                                cols="50"
+                                cols="30"
                                 type="text"
                                 v-model="text"
                                 :label="textLabel"
-                                placeholder="Texte de votre post."
+                                placeholder="votre texte ici"
                         >
                         </textarea>
                         <br />

@@ -41,8 +41,7 @@ export default {
                                 email: this.email,
                                 password: this.password,
                         };
-                        this.$emit("login", user);
-
+                        // this.$emit("login", user);
                         let userJSON = JSON.stringify(user);
                         console.log(userJSON);
                         const data = await fetch(
@@ -64,6 +63,10 @@ export default {
                         if (data.userId) {
                                 console.log(
                                         data.userId + " utilisateur loggé !"
+                                );
+                                localStorage.setItem(
+                                        "user",
+                                        JSON.stringify(data)
                                 );
                                 this.$router.push("/");
                         }
