@@ -1,5 +1,5 @@
 <template>
-        <img class="logo" alt="Vue logo" src="./assets/icon.svg" />
+        <Header />
         <br />
         <router-view></router-view>
         <Footer />
@@ -7,11 +7,13 @@
 
 <script>
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 export default {
         name: "App",
         components: {
                 Footer,
+                Header,
         },
 };
 </script>

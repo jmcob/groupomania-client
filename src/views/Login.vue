@@ -32,7 +32,6 @@ export default {
                         password: "",
                         emailLabel: "Email :",
                         passwordLabel: "Mot de passe :",
-                        userX: [],
                         data: Object,
                 };
         },
