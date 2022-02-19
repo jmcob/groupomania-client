@@ -96,6 +96,7 @@ export default {
                                 return res.json();
                         });
                         if (res.data.id === id) {
+                                console.log(id, res.data.id);
                                 this.posts = this.posts.map((post) =>
                                         post.id === res.data.id
                                                 ? {
@@ -104,6 +105,7 @@ export default {
                                                   }
                                                 : post
                                 );
+                                console.log;
                         } else {
                                 alert("Erreur dans la modification du post");
                         }

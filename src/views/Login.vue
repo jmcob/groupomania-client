@@ -57,9 +57,6 @@ export default {
                         ).then((res) => {
                                 return res.json();
                         });
-                        // .then((data) => {
-                        //         return data;
-                        // });
                         if (data.userId) {
                                 console.log(
                                         data.userId + " utilisateur loggé !"

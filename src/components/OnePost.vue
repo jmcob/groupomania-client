@@ -23,8 +23,8 @@ export default {
                                 rows="4"
                                 cols="30"
                                 type="text"
-                                v-model="text"
-                                placeholder="Entrez votre texte"
+                                v-model="updatedText"
+                                placeholder="insérez un texte"
                         ></textarea>
                 </div>
                 <p class="createdAt">Ecrit le : {{ post.createdAt }}</p>
