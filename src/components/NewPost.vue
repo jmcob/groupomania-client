@@ -10,8 +10,8 @@
                         />
                         <br />
                         <textarea
-                                rows="4"
-                                cols="30"
+                                rows="5"
+                                cols="25"
                                 type="text"
                                 v-model="text"
                                 :label="textLabel"
@@ -36,7 +36,7 @@ export default {
                         buttonText: "Nouveau post",
                         title: "",
                         text: "",
-                        userId: 19,
+                        userId: 1,
                 };
         },
         methods: {
@@ -53,7 +53,7 @@ export default {
                         this.$emit("add-post", newPost);
                         this.text = "";
                         this.title = "";
-                        this.userId = 19;
+                        this.userId = "";
                 },
         },
 };
@@ -62,8 +62,11 @@ export default {
 <style scoped>
 #newpost {
         border: 1px solid orangered;
-        width: 50%;
+        width: 50vw;
         padding-top: 15px;
         padding-bottom: 25px;
+}
+input {
+        max-width: 40vw;
 }
 </style>

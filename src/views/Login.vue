@@ -62,7 +62,7 @@ export default {
                                         data.userId + " utilisateur loggé !"
                                 );
                                 localStorage.setItem(
-                                        "user",
+                                        "token",
                                         JSON.stringify(data)
                                 );
                                 this.$router.push("/");
