@@ -56,9 +56,9 @@ export default {
                         ).then((res) => {
                                 return res.json();
                         });
-                        if (data.users_id) {
+                        if (data.user_id) {
                                 console.log(
-                                        data.users_id + " utilisateur loggé !"
+                                        data.user_id + " utilisateur loggé !"
                                 );
                                 localStorage.setItem(
                                         "token",

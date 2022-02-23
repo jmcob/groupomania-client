@@ -36,7 +36,7 @@ export default {
                         buttonText: "Nouveau post",
                         title: "",
                         text: "",
-                        user_id: 1,
+                        user_id: 2,
                 };
         },
         methods: {
@@ -53,7 +53,7 @@ export default {
                         this.$emit("add-post", newPost);
                         this.text = "";
                         this.title = "";
-                        this.user_id = 1;
+                        this.user_id = 2;
                 },
         },
 };

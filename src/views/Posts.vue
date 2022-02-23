@@ -28,7 +28,7 @@ export default {
         data() {
                 return {
                         posts: [],
-                        updatedText: "valeur moins dure",
+                        updatedText: "",
                 };
         },
         methods: {

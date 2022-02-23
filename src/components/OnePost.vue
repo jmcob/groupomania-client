@@ -1,12 +1,29 @@
 <script>
+import OneComment from "./OneComment.vue";
 export default {
+        components: { OneComment },
         name: "OnePost",
         props: ["post", "updatePost"],
+        methods: {
+                async getComments() {
+                        const data = await fetch(
+                                "http://localhost:3000/api/comment/"
+                        ).then((res) => {
+                                return res.json();
+                        });
+                        return data.data;
+                },
+        },
         data() {
                 return {
+                        // hard property makes the post editable with a button
+                        comments: [],
                         hard: true,
                         updatedText: "",
                 };
+        },
+        async created() {
+                this.comments = await this.getComments();
         },
 };
 </script>
@@ -46,6 +63,19 @@ export default {
                 </button>
 
                 <br />
+
+                <div>
+                        <div>
+                                <h3>Commentaires :</h3>
+                                <OneComment
+                                        v-for="comment in comments"
+                                        class="onecomment"
+                                        :comment="comment"
+                                        :post="post"
+                                        :key="comment.id"
+                                />
+                        </div>
+                </div>
         </div>
 </template>
 
