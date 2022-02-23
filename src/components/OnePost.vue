@@ -14,7 +14,7 @@ export default {
 <template>
         <div id="onepost">
                 <h2 class="title">{{ post.title }}</h2>
-                <h3 class="userId">by user (ID) : {{ post.userId }}</h3>
+                <h3 class="user_id">by user (ID) : {{ post.users_id }}</h3>
                 <div v-if="hard">
                         <p class="text">{{ post.text }}</p>
                 </div>

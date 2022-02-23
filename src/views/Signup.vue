@@ -8,6 +8,11 @@
                 />
                 <CustomLoginInput
                         class="input"
+                        v-model="username"
+                        :label="usernameLabel"
+                />
+                <CustomLoginInput
+                        class="input"
                         v-model="password"
                         :label="passwordLabel"
                 />
@@ -27,9 +32,10 @@ export default {
                         title: "Inscription",
                         email: "",
                         password: "",
+                        username: "",
                         emailLabel: "Email :",
                         passwordLabel: "Mot de passe :",
-                        userX: [],
+                        usernameLabel: "Nom d'utilisateur",
                         data: {},
                 };
         },
@@ -37,6 +43,7 @@ export default {
                 async handleSubmit() {
                         let user = {
                                 email: this.email,
+                                username: this.username,
                                 password: this.password,
                         };
                         let userJSON = JSON.stringify(user);

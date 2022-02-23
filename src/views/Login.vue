@@ -11,7 +11,7 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button @click="$emit('submitted', data.userId)">
+                <button @click="$emit('submitted', data.users_id)">
                         {{ title }}
                 </button>
         </form>
@@ -43,7 +43,6 @@ export default {
                         };
                         // this.$emit("login", user);
                         let userJSON = JSON.stringify(user);
-                        console.log(userJSON);
                         const data = await fetch(
                                 "http://localhost:3000/api/user/login",
                                 {
@@ -57,9 +56,9 @@ export default {
                         ).then((res) => {
                                 return res.json();
                         });
-                        if (data.userId) {
+                        if (data.users_id) {
                                 console.log(
-                                        data.userId + " utilisateur loggé !"
+                                        data.users_id + " utilisateur loggé !"
                                 );
                                 localStorage.setItem(
                                         "token",

@@ -42,6 +42,7 @@ export default {
                 },
                 async addPost(newPost) {
                         const post = JSON.stringify(newPost);
+                        console.log(post);
                         const data = await fetch(
                                 "http://localhost:3000/api/post/",
                                 {
@@ -55,6 +56,7 @@ export default {
                         ).then((res) => {
                                 return res.json();
                         });
+                        console.log(data);
                         const newBornPost = data.data;
                         console.log(newBornPost);
                         this.posts = [newBornPost, ...this.posts];
