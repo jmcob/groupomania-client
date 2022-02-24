@@ -1,7 +1,8 @@
 <script>
 import OneComment from "./OneComment.vue";
+import NewComment from "./NewComment.vue";
 export default {
-        components: { OneComment },
+        components: { OneComment, NewComment },
         name: "OnePost",
         props: ["post", "updatePost"],
         methods: {
@@ -16,7 +17,7 @@ export default {
         },
         data() {
                 return {
-                        // hard property makes the post editable with a button
+                        // 'hard' property  set to true makes the post editable with a button
                         comments: [],
                         hard: true,
                         updatedText: "",
@@ -67,6 +68,10 @@ export default {
                 <div>
                         <div>
                                 <h3>Commentaires :</h3>
+                                <NewComment
+                                        :post="post"
+                                        @add-comment="addComment"
+                                />
                                 <OneComment
                                         v-for="comment in comments"
                                         class="onecomment"

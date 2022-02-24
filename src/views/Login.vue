@@ -11,7 +11,7 @@
                         v-model="password"
                         :label="passwordLabel"
                 />
-                <button @click="$emit('submitted', data.users_id)">
+                <button @click="$emit('submitted', data.user_id)">
                         {{ title }}
                 </button>
         </form>
