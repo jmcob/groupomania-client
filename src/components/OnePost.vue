@@ -1,34 +1,3 @@
-<script>
-import OneComment from "./OneComment.vue";
-import NewComment from "./NewComment.vue";
-export default {
-        components: { OneComment, NewComment },
-        name: "OnePost",
-        props: ["post", "updatePost"],
-        methods: {
-                async getComments() {
-                        const data = await fetch(
-                                "http://localhost:3000/api/comment/"
-                        ).then((res) => {
-                                return res.json();
-                        });
-                        return data.data;
-                },
-        },
-        data() {
-                return {
-                        // 'hard' property  set to true makes the post editable with a button
-                        comments: [],
-                        hard: true,
-                        updatedText: "",
-                };
-        },
-        async created() {
-                this.comments = await this.getComments();
-        },
-};
-</script>
-
 <template>
         <div id="onepost">
                 <h2 class="title">{{ post.title }}</h2>
@@ -83,6 +52,59 @@ export default {
                 </div>
         </div>
 </template>
+
+<script>
+import OneComment from "./OneComment.vue";
+import NewComment from "./NewComment.vue";
+
+export default {
+        components: { OneComment, NewComment },
+        name: "OnePost",
+        props: ["post", "updatePost"],
+        data() {
+                return {
+                        // 'hard' property  set to true makes the post editable with a button
+                        comments: [],
+                        hard: true,
+                        updatedText: "",
+                };
+        },
+        methods: {
+                async addComment(newComment) {
+                        const comment = JSON.stringify(newComment);
+                        console.log(comment);
+                        const data = await fetch(
+                                "http://localhost:3000/api/comment/",
+                                {
+                                        method: "POST",
+                                        headers: {
+                                                "Content-type":
+                                                        "application/json",
+                                        },
+                                        body: comment,
+                                }
+                        ).then((res) => {
+                                return res.json();
+                        });
+                        console.log(data);
+                        const newBornComment = data.data;
+                        console.log(newBornComment);
+                        this.comments = [newBornComment, ...this.comments];
+                },
+                async getComments() {
+                        const data = await fetch(
+                                "http://localhost:3000/api/comment/"
+                        ).then((res) => {
+                                return res.json();
+                        });
+                        return data.data;
+                },
+        },
+        async created() {
+                this.comments = await this.getComments();
+        },
+};
+</script>
 
 <style scoped>
 #onepost {

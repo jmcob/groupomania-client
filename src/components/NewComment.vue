@@ -12,7 +12,6 @@
                         >
                         </textarea>
                         <br />
-
                         <button>
                                 {{ buttonText }}
                         </button>
@@ -31,7 +30,7 @@ export default {
                         user_id: 2,
                 };
         },
-        props: ["posts"],
+        props: ["post"],
         methods: {
                 async newComment() {
                         if (!this.text) {
@@ -40,13 +39,12 @@ export default {
                         }
                         const newComment = {
                                 text: this.text,
-                                user_id: this.user_id,
+                                users_id: this.user_id,
                                 posts_id: this.post.id,
                         };
                         this.$emit("add-comment", newComment);
                         this.text = "";
                         this.user_id = 2;
-                        this.post.id = Number;
                 },
         },
 };
