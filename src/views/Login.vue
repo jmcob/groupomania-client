@@ -1,5 +1,5 @@
 <template>
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="login">
                 <h2>{{ title }}</h2>
                 <CustomLoginInput
                         class="input"
@@ -28,22 +28,22 @@ export default {
         data() {
                 return {
                         title: "Connexion",
-                        email: "",
-                        password: "",
                         emailLabel: "Email :",
                         passwordLabel: "Mot de passe :",
                         data: Object,
+                        email: "",
+                        password: "",
                 };
         },
         methods: {
-                async handleSubmit() {
+                async login() {
                         let user = {
-                                email: this.email,
-                                password: this.password,
+                                email: this.$store.state.email,
+                                password: this.$store.state.password,
                         };
-                        // this.$emit("login", user);
                         let userJSON = JSON.stringify(user);
-                        const data = await fetch(
+                        console.log(userJSON);
+                        const userData = await fetch(
                                 "http://localhost:3000/api/user/login",
                                 {
                                         method: "POST",
@@ -56,18 +56,37 @@ export default {
                         ).then((res) => {
                                 return res.json();
                         });
-                        if (data.user_id) {
+                        if (userData.user_id) {
                                 console.log(
-                                        data.user_id + " utilisateur loggé !"
+                                        userData.user_id +
+                                                " utilisateur loggé !"
                                 );
                                 localStorage.setItem(
-                                        "token",
-                                        JSON.stringify(data)
+                                        "userData",
+                                        JSON.stringify(userData)
                                 );
                                 this.$router.push("/");
                         }
                 },
         },
+        // computed: {
+        //         email: {
+        //                 get() {
+        //                         return this.$store.state.email;
+        //                 },
+        //                 set(value) {
+        //                         this.$store.dispatch("updateEmail", value);
+        //                 },
+        //         },
+        //         password: {
+        //                 get() {
+        //                         return this.$store.state.password;
+        //                 },
+        //                 set(value) {
+        //                         this.$store.dispatch("updatePassword", value);
+        //                 },
+        //         },
+        // },
 };
 </script>
 
