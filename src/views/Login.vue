@@ -38,8 +38,8 @@ export default {
         methods: {
                 async login() {
                         let user = {
-                                email: this.$store.state.email,
-                                password: this.$store.state.password,
+                                email: this.email,
+                                password: this.password,
                         };
                         let userJSON = JSON.stringify(user);
                         console.log(userJSON);

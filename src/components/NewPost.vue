@@ -1,6 +1,9 @@
 <template>
         <div id="newpost">
-                <p>Votre ID utilisateur : {{ user_id }}</p>
+                <p>
+                        Votre ID utilisateur :
+                        {{ this.$store.state.user.user_id }}
+                </p>
                 <form @submit.prevent="newPost">
                         <input
                                 type="text"
@@ -36,7 +39,7 @@ export default {
                         buttonText: "Nouveau post",
                         title: "",
                         text: "",
-                        user_id: "2",
+                        user_id: Number,
                 };
         },
         methods: {
@@ -48,12 +51,11 @@ export default {
                         const newPost = {
                                 title: this.title,
                                 text: this.text,
-                                user_id: this.user_id,
+                                user_id: this.$store.state.user.user_id,
                         };
                         this.$emit("add-post", newPost);
                         this.text = "";
                         this.title = "";
-                        this.user_id = "2";
                 },
         },
 };

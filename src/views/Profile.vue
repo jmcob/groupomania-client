@@ -1,7 +1,7 @@
 <template>
         <h1>{{ user.username }}</h1>
         <p>token : {{ user.token }}</p>
-        <p>id : {{ user.id }}</p>
+        <p>id : {{ user.user_id }}</p>
         <p>email : {{ user.email }}</p>
 </template>
 

@@ -1,6 +1,9 @@
 <template>
         <div class="newcomment">
-                <p>Votre ID utilisateur : {{ user_id }}</p>
+                <p>
+                        Votre ID utilisateur :
+                        {{ this.$store.state.user.user_id }}
+                </p>
                 <form @submit.prevent="newComment">
                         <textarea
                                 rows="5"
@@ -27,7 +30,7 @@ export default {
                         buttonText: "Nouveau commentaire",
                         title: "",
                         text: "",
-                        user_id: 2,
+                        user_id: Number,
                 };
         },
         props: ["post"],
@@ -39,12 +42,11 @@ export default {
                         }
                         const newComment = {
                                 text: this.text,
-                                users_id: this.user_id,
+                                users_id: this.$store.state.user.user_id,
                                 posts_id: this.post.id,
                         };
                         this.$emit("add-comment", newComment);
                         this.text = "";
-                        this.user_id = 2;
                 },
         },
 };
