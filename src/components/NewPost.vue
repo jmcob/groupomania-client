@@ -1,8 +1,8 @@
 <template>
         <div id="newpost">
                 <p>
-                        Votre ID utilisateur :
-                        {{ this.$store.state.user.user_id }}
+                        Vous postez en tant que
+                        <strong> {{ this.$store.state.user.username }}</strong>
                 </p>
                 <form @submit.prevent="newPost">
                         <input
@@ -67,8 +67,11 @@ export default {
         width: 75vw;
         padding-top: 15px;
         padding-bottom: 25px;
+        border-radius: 5px;
+        background-color: pink;
 }
-input {
-        max-width: 40vw;
+input,
+textarea {
+        width: 30vw;
 }
 </style>

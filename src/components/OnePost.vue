@@ -27,8 +27,7 @@
                 >
                         Envoyer le post modifié
                 </button>
-
-                <button @click="$emit('delete-post', post.id)">
+                <button class="delete" @click="$emit('delete-post', post.id)">
                         Supprimer le post
                 </button>
 
@@ -112,5 +111,11 @@ export default {
         border-bottom: 1px solid black;
         margin: 5px;
         padding-bottom: 15px;
+}
+.title {
+        background-color: bisque;
+}
+.delete {
+        background-color: rgb(245, 50, 89);
 }
 </style>

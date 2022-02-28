@@ -29,6 +29,13 @@ export default {
         margin-top: 60px;
 }
 .logo {
-        width: 100px;
+        width: 200px;
+}
+button {
+        background-color: coral;
+        color: white;
+        font-weight: bold;
+        padding: 15px;
+        border-radius: 5px;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
         <div class="newcomment">
                 <p>
-                        Votre ID utilisateur :
-                        {{ this.$store.state.user.user_id }}
+                        Vous commentez en tant que
+                        <strong> {{ this.$store.state.user.username }} </strong>
                 </p>
                 <form @submit.prevent="newComment">
                         <textarea

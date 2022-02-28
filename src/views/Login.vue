@@ -69,24 +69,6 @@ export default {
                         }
                 },
         },
-        // computed: {
-        //         email: {
-        //                 get() {
-        //                         return this.$store.state.email;
-        //                 },
-        //                 set(value) {
-        //                         this.$store.dispatch("updateEmail", value);
-        //                 },
-        //         },
-        //         password: {
-        //                 get() {
-        //                         return this.$store.state.password;
-        //                 },
-        //                 set(value) {
-        //                         this.$store.dispatch("updatePassword", value);
-        //                 },
-        //         },
-        // },
 };
 </script>
 

@@ -39,7 +39,7 @@ export default {
                 },
                 loggedIn() {
                         this.getUserDataFromStorage();
-                        if (this.$store.state.user.token) {
+                        if (this.$store.state.user !== null) {
                                 this.logged = true;
                         }
                 },
