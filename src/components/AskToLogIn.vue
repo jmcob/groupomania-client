@@ -1,8 +1,8 @@
 <template>
         <h1>Bienvenue sur Groupomania</h1>
         <div v-if="logged">
-                <p>Bienvenue à toi, {{ this.$store.state.user.username }}</p>
-                <p><router-link to="/posts">View les posts</router-link></p>
+                <h2>Bienvenue à toi, {{ this.$store.state.user.username }}</h2>
+                <p><router-link to="/posts">Voir les posts</router-link></p>
                 <p><router-link to="/profile">Voir ton profil</router-link></p>
                 <button @click="loggedOut">Deconnexion</button>
         </div>
@@ -64,3 +64,12 @@ export default {
         },
 };
 </script>
+
+<style scoped>
+h1 {
+        background-color: pink;
+        border: 1px solid orangered;
+        border-radius: 5px;
+        width: 75%;
+}
+</style>

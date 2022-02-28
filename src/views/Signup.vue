@@ -61,6 +61,7 @@ export default {
                         );
                         const data = await res.json();
                         console.log(data.message);
+                        this.$router.push("/");
                 },
         },
 };
