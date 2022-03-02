@@ -1,24 +1,15 @@
-# front-groupomania
+# Groupomania
 
-## Project setup
+## Project setup Frontend
 ```
 npm install
+npm run serve -- --port 8080
 ```
 
-### Compiles and hot-reloads for development
+## Project setup Backend
 ```
-npm run serve
+cd api/
+npm install
+npm start
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Then go to localhost:8080/
