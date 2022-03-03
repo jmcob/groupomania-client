@@ -23,29 +23,42 @@
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
-
-                <div v-if="itsAMatch" class="buttons">
-                    <div v-if="hard">
-                        <i class="far fa-edit" @click="hard = !hard"> </i>
+                <div class="buttonContainer">
+                    <div @click="like" class="button" v-if="user">
+                        <p>
+                            <i class="fas fa-heart"></i>
+                            {{ this.count }}
+                        </p>
                     </div>
-                    <div v-else>
-                        <i
-                            class="far fa-paper-plane"
-                            @click="
-                                $emit('update-post', post.id, updatedText),
-                                    (hard = !hard)
-                            "
-                        ></i>
+                    <div v-if="itsAMatch" class="buttons">
+                        <div class="button" v-if="hard">
+                            <p @click="hard = !hard">
+                                <i class="far fa-edit"></i>Modifier
+                            </p>
+                        </div>
+                        <div class="button" v-else>
+                            <p
+                                @click="
+                                    $emit('update-post', post.id, updatedText),
+                                        (hard = !hard)
+                                "
+                            >
+                                <i class="far fa-paper-plane"></i>Envoyer
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <i
+                                    class="delete fas fa-times"
+                                    @click="$emit('delete-post', post.id)"
+                                >
+                                </i
+                                >Supprimer
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <i
-                            class="delete fas fa-times"
-                            @click="$emit('delete-post', post.id)"
-                        >
-                        </i>
-                    </div>
+                    <div v-else class="buttons"></div>
                 </div>
-                <div v-else class="buttons"></div>
             </div>
             <br />
         </div>
@@ -75,12 +88,12 @@ export default {
     props: ["post", "updatePost"],
     data() {
         return {
-            // if 'hard' property is  set to true, post is editable with a button
             comments: [],
-            hard: true,
+            hard: true, // if 'hard' property is  set to true, post is editable with a button
             updatedText: "",
             itsAMatch: false,
             poster: [],
+            count: Number,
         };
     },
     mounted() {
@@ -113,10 +126,8 @@ export default {
         idsMatch() {
             let posterid = this.post.users_id;
             let userid = this.user.user_id;
-            console.log(posterid, userid);
             if (posterid === userid) {
                 this.itsAMatch = true;
-                console.log(this.itsAMatch);
             } else this.itsAMatch = false;
         },
         async whosTheAuthor() {
@@ -129,14 +140,47 @@ export default {
             this.poster.username = userData.data.username;
             this.poster.email = userData.data.email;
         },
+        async like() {
+            if (this.user) {
+                let likeCreditentials = {
+                    postId: this.post.id,
+                    user_id: this.user.user_id,
+                };
+                await fetch("http://localhost:3000/api/like/", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        Authorization: "Bearer " + this.token,
+                    },
+                    body: JSON.stringify(likeCreditentials),
+                }).then((res) => {
+                    return res.json();
+                });
+                this.count++;
+            }
+        },
+        async counter() {
+            const res = await fetch(
+                "http://localhost:3000/api/like/" + this.post.id
+            ).then((res) => {
+                return res.json();
+            });
+            if (res.data.length != null);
+            console.log(this.post.id + " has " + res.data.length + " likes");
+            return res.data.length;
+        },
     },
     computed: {
         user() {
             return this.$store.state.user;
         },
+        token() {
+            return this.$store.state.user.token;
+        },
     },
     async created() {
         this.comments = await this.getComments();
+        this.count = await this.counter();
     },
 };
 </script>
@@ -150,7 +194,6 @@ export default {
     flex-direction: column;
     width: 60vw;
     margin: 5px;
-    padding-bottom: 15px;
 }
 .title {
     padding: 0px;
@@ -173,6 +216,11 @@ export default {
 .buttons {
     display: flex;
     flex-direction: column;
+    padding: 0px;
+}
+.buttons,
+p {
+    margin: 0px;
 }
 .comments {
     display: flex;
@@ -181,7 +229,12 @@ export default {
 .title {
     background-color: rgb(255, 221, 227);
 }
-
+.fa-heart:hover {
+    color: pink;
+}
+.fa-heart:active {
+    color: crimson;
+}
 i {
     font-size: x-large;
     padding: 8px;

@@ -97,7 +97,6 @@ export default {
                 return res.json();
             });
             if (res.data.id === id) {
-                console.log(id, res.data.id);
                 this.posts = this.posts.map((post) =>
                     post.id === res.data.id
                         ? {

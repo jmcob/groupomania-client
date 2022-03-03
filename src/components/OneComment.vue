@@ -3,7 +3,7 @@
         <div class="onecomment">
             <div class="author_date">
                 <h3 class="user_id">
-                    {{ this.poster.username }} le : {{ comment.createdAt }}
+                    {{ this.commenter.username }} le : {{ comment.createdAt }}
                 </h3>
             </div>
             <p class="text">{{ comment.text }}</p>
@@ -18,7 +18,7 @@ export default {
     data() {
         return {
             updatedComment: "",
-            poster: [],
+            commenter: [],
         };
     },
     mounted() {
@@ -26,14 +26,14 @@ export default {
     },
     methods: {
         async whosTheAuthor() {
-            let posterid = this.post.users_id;
+            let commenterid = this.comment.users_id;
             let userData = await fetch(
-                "http://localhost:3000/api/user/" + posterid
+                "http://localhost:3000/api/user/" + commenterid
             ).then((res) => {
                 return res.json();
             });
-            this.poster.username = userData.data.username;
-            this.poster.email = userData.data.email;
+            this.commenter.username = userData.data.username;
+            this.commenter.email = userData.data.email;
         },
     },
 };

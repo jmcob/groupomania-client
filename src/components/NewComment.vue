@@ -1,6 +1,6 @@
 <template>
     <div class="newcomment">
-        <p v-if="!user.username">
+        <p v-if="!this.user.username">
             <router-link to="/login"> Connectez-vous</router-link> pour
             commenter
         </p>
@@ -17,7 +17,7 @@
                         type="text"
                         v-model="text"
                         :label="textLabel"
-                        placeholder="votre commentaire ici"
+                        placeholder="Votre commentaire ici"
                     >
                     </textarea>
                 </div>
@@ -48,9 +48,11 @@ export default {
     },
     props: ["post"],
     methods: {
-        async newComment() {
+        newComment() {
             if (!this.text) {
-                alert("Please add a full comment");
+                alert(
+                    "Entrez un commentaire s'il vous plait avant de l'envoyer"
+                );
                 return;
             }
             const newComment = {
