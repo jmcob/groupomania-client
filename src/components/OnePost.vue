@@ -170,7 +170,7 @@ export default {
             return res.data.length;
         },
     },
-    computed: mapState(["logged", "user"]),
+    computed: mapState(["user"]),
     async created() {
         this.comments = await this.getComments();
         this.count = await this.counter();

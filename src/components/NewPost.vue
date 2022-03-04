@@ -1,6 +1,6 @@
 <template>
     <div id="newpost">
-        <div v-if="!logged">
+        <div v-if="!this.utilisateur.logged">
             <p>
                 <router-link to="/login"> Connectez-vous</router-link> pour
                 publier
@@ -55,7 +55,7 @@ export default {
             utilisateur: [],
         };
     },
-    computed: mapState(["logged", "user"]),
+    computed: mapState(["user"]),
     mounted() {
         this.amILogged();
     },

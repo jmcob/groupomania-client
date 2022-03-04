@@ -1,6 +1,6 @@
 <template>
     <h1>Bienvenue sur Groupomania</h1>
-    <div v-if="this.logged">
+    <div v-if="this.utilisateur.logged">
         <h2>Bienvenue à toi, {{ this.utilisateur.username }} !</h2>
         <p><router-link to="/posts">Voir les posts</router-link></p>
         <p><router-link to="/profile">Voir ton profil</router-link></p>
@@ -30,7 +30,7 @@ export default {
             utilisateur: [],
         };
     },
-    computed: mapState(["logged", "user"]),
+    computed: mapState(["user"]),
 
     methods: {
         ...mapMutations(["logOut"]),

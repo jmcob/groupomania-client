@@ -2,7 +2,7 @@
     <div id="container">
         <h1>Profil</h1>
         <div v-if="hard">
-            <h2>{{ utilisateur.username }}</h2>
+            <h2>{{ this.utilisateur.username }}</h2>
         </div>
         <div v-else>
             <input
@@ -19,16 +19,16 @@
                     name="story"
                     rows="5"
                     cols="33"
-                    v-model="utilisateur.token"
+                    v-model="this.utilisateur.token"
                 ></textarea>
             </p>
         </div>
         <p>
             Votre id utilisateur :
-            <strong>{{ utilisateur.user_id }}</strong>
+            <strong>{{ this.utilisateur.user_id }}</strong>
         </p>
         <p>
-            Votre email : <strong>{{ utilisateur.email }}</strong>
+            Votre email : <strong>{{ this.utilisateur.email }}</strong>
         </p>
         <div @click="hard = !hard" class="edit" v-if="hard">
             <i title="Modifier" class="far fa-edit"></i> Modifier
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Profile",
@@ -51,8 +51,6 @@ export default {
             utilisateur: [],
         };
     },
-    computed: mapState(["logged", "user"]),
-
     methods: {
         ...mapMutations(["logOut"]),
         ...mapActions(["amILogged"]),
@@ -60,7 +58,7 @@ export default {
             const json = {
                 ...this.user,
                 username: this.updatedUsername,
-                userid: this.user.user_id,
+                userid: this.utilisateur.user_id,
             };
             console.log(json);
         },
@@ -69,11 +67,11 @@ export default {
     async created() {
         this.utilisateur = await this.amILogged();
     },
-    mounted() {
-        if (!this.logged) {
-            this.$router.push("/login");
-        }
-    },
+    // mounted() {
+    //     if (!this.utilisateur.logged) {
+    //         this.$router.push("/login");
+    //     }
+    // },
 };
 </script>
 
