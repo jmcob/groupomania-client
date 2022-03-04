@@ -81,6 +81,7 @@
 <script>
 import OneComment from "./OneComment.vue";
 import NewComment from "./NewComment.vue";
+import { mapMutations, mapActions, mapState } from "vuex";
 
 export default {
     components: { OneComment, NewComment },
@@ -94,13 +95,13 @@ export default {
             itsAMatch: false,
             poster: [],
             count: Number,
+            utilisateur: [],
         };
     },
-    mounted() {
-        this.idsMatch();
-        this.whosTheAuthor();
-    },
+
     methods: {
+        ...mapMutations(["logOut"]),
+        ...mapActions(["amILogged"]),
         async addComment(newComment) {
             const comment = JSON.stringify(newComment);
             const data = await fetch("http://localhost:3000/api/comment/", {
@@ -125,7 +126,7 @@ export default {
         },
         idsMatch() {
             let posterid = this.post.users_id;
-            let userid = this.user.user_id;
+            let userid = this.utilisateur.user_id;
             if (posterid === userid) {
                 this.itsAMatch = true;
             } else this.itsAMatch = false;
@@ -166,21 +167,17 @@ export default {
                 return res.json();
             });
             if (res.data.length != null);
-            console.log(this.post.id + " has " + res.data.length + " likes");
             return res.data.length;
         },
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
-        token() {
-            return this.$store.state.user.token;
-        },
-    },
+    computed: mapState(["logged", "user"]),
     async created() {
         this.comments = await this.getComments();
         this.count = await this.counter();
+        this.utilisateur = await this.amILogged();
+        console.log(this.utilisateur);
+        this.idsMatch();
+        this.whosTheAuthor();
     },
 };
 </script>

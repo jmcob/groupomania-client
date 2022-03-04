@@ -1,7 +1,7 @@
 <template>
     <h1>Bienvenue sur Groupomania</h1>
     <div v-if="logged">
-        <h2>Bienvenue à toi, {{ this.user.username }}</h2>
+        <h2>Bienvenue à toi, {{ this.utilisateur.username }} !</h2>
         <p><router-link to="/posts">Voir les posts</router-link></p>
         <p><router-link to="/profile">Voir ton profil</router-link></p>
         <button @click="logOut">Deconnexion</button>
@@ -22,54 +22,22 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 
 export default {
     data() {
         return {
-            logged: false,
-            userData: [],
+            utilisateur: [],
         };
     },
-    mounted() {
-        this.loggedIn();
-        this.getUserDataFromApi();
-    },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
-    },
-    methods: {
-        ...mapActions(["logOut"]),
-        ...mapActions({
-            add: "logOut",
-        }),
+    computed: mapState(["logged", "user"]),
 
-        getUserDataFromStorage() {
-            this.$store.state.user = JSON.parse(
-                localStorage.getItem("userData")
-            );
-            return this.$store.state.user;
-        },
-        loggedIn() {
-            this.getUserDataFromStorage();
-            if (this.user !== null) {
-                this.logged = true;
-            }
-        },
-        async getUserDataFromApi() {
-            if (this.logged) {
-                this.getUserDataFromStorage();
-                const userData = await fetch(
-                    "http://localhost:3000/api/user/" + this.user.user_id
-                ).then((res) => {
-                    return res.json();
-                });
-                this.user.username = userData.data.username;
-                this.user.email = userData.data.email;
-            }
-        },
+    methods: {
+        ...mapMutations(["logOut"]),
+        ...mapActions(["amILogged"]),
+    },
+    async created() {
+        this.utilisateur = await this.amILogged();
     },
 };
 </script>

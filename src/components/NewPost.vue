@@ -1,6 +1,6 @@
 <template>
     <div id="newpost">
-        <div v-if="!this.user.username">
+        <div v-if="!logged">
             <p>
                 <router-link to="/login"> Connectez-vous</router-link> pour
                 publier
@@ -9,7 +9,7 @@
         <div v-else>
             <p>
                 Vous postez en tant que
-                <strong> {{ this.user.username }} </strong>
+                <strong> {{ this.utilisateur.username }} </strong>
                 <br />
                 <br />
                 <button @click="logOut">Deconnexion</button>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data() {
         return {
@@ -52,18 +52,16 @@ export default {
             title: "",
             text: "",
             user_id: Number,
+            utilisateur: [],
         };
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
+    computed: mapState(["logged", "user"]),
+    mounted() {
+        this.amILogged();
     },
     methods: {
-        ...mapActions(["logOut"]),
-        ...mapActions({
-            add: "logOut",
-        }),
+        ...mapMutations(["logOut"]),
+        ...mapActions(["amILogged"]),
         async newPost() {
             if (!this.text || !this.title) {
                 alert("Please add a full post");
@@ -78,6 +76,9 @@ export default {
             this.text = "";
             this.title = "";
         },
+    },
+    async created() {
+        this.utilisateur = await this.amILogged();
     },
 };
 </script>

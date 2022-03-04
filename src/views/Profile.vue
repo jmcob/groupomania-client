@@ -2,12 +2,12 @@
     <div id="container">
         <h1>Profil</h1>
         <div v-if="hard">
-            <h2>{{ user.username }}</h2>
+            <h2>{{ utilisateur.username }}</h2>
         </div>
         <div v-else>
             <input
                 type="text"
-                placeholder="Entrez votre username"
+                placeholder="Entrez votre nom d'utilisateur"
                 v-model="updatedUsername"
             />
         </div>
@@ -19,16 +19,16 @@
                     name="story"
                     rows="5"
                     cols="33"
-                    v-model="user.token"
+                    v-model="utilisateur.token"
                 ></textarea>
             </p>
         </div>
         <p>
             Votre id utilisateur :
-            <strong>{{ user.user_id }}</strong>
+            <strong>{{ utilisateur.user_id }}</strong>
         </p>
         <p>
-            Votre email : <strong>{{ user.email }}</strong>
+            Votre email : <strong>{{ utilisateur.email }}</strong>
         </p>
         <div @click="hard = !hard" class="edit" v-if="hard">
             <i title="Modifier" class="far fa-edit"></i> Modifier
@@ -40,20 +40,22 @@
 </template>
 
 <script>
+import { mapMutations, mapActions, mapState } from "vuex";
+
 export default {
     name: "Profile",
     data() {
         return {
             hard: true,
             updatedUsername: "",
+            utilisateur: [],
         };
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
-    },
+    computed: mapState(["logged", "user"]),
+
     methods: {
+        ...mapMutations(["logOut"]),
+        ...mapActions(["amILogged"]),
         async updateProfile() {
             const json = {
                 ...this.user,
@@ -63,8 +65,12 @@ export default {
             console.log(json);
         },
     },
+
+    async created() {
+        this.utilisateur = await this.amILogged();
+    },
     mounted() {
-        if (!this.user) {
+        if (!this.logged) {
             this.$router.push("/login");
         }
     },
