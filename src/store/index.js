@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
     state: {
         user: [],
-        logged: true,
+        logged: false,
     },
     mutations: {
         logOut(state) {

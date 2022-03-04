@@ -144,8 +144,8 @@ export default {
         async like() {
             if (this.user) {
                 let likeCreditentials = {
-                    postId: this.post.id,
-                    user_id: this.user.user_id,
+                    posts_id: this.post.id,
+                    users_id: this.user.user_id,
                 };
                 await fetch("http://localhost:3000/api/like/", {
                     method: "POST",
