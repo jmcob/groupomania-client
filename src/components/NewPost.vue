@@ -70,7 +70,7 @@ export default {
             const newPost = {
                 title: this.title,
                 text: this.text,
-                user_id: this.user.user_id,
+                user_id: this.utilisateur.user_id,
             };
             this.$emit("add-post", newPost);
             this.text = "";

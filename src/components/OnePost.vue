@@ -18,13 +18,12 @@
                     <textarea
                         rows="4"
                         cols="30"
-                        type="text"
                         v-model="updatedText"
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
                 <div class="buttonContainer">
-                    <div @click="like" class="button" v-if="user">
+                    <div @click="like" class="button" v-if="this.utilisateur">
                         <p>
                             <i class="fas fa-heart"></i>
                             {{ this.count }}
@@ -63,13 +62,12 @@
             <br />
         </div>
         <div class="comments">
-            <div v-if="!user.username"></div>
+            <div v-if="!this.utilisateur.username"></div>
             <div v-else>
                 <NewComment :post="post" @add-comment="addComment" />
             </div>
             <OneComment
                 v-for="comment in comments"
-                class="onecomment"
                 :comment="comment"
                 :post="post"
                 :key="comment.id"
@@ -108,6 +106,7 @@ export default {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
+                    Authorization: "Bearer " + this.utilisateur.token,
                 },
                 body: comment,
             }).then((res) => {
@@ -125,16 +124,14 @@ export default {
             return data.data;
         },
         idsMatch() {
-            let posterid = this.post.users_id;
+            let posterId = this.post.users_id;
             let userid = this.utilisateur.user_id;
-            if (posterid === userid) {
-                this.itsAMatch = true;
-            } else this.itsAMatch = false;
+            this.itsAMatch = posterId === userid;
         },
-        async whosTheAuthor() {
-            let posterid = this.post.users_id;
+        async whoIsTheAuthor() {
+            let posterId = this.post.users_id;
             let userData = await fetch(
-                "http://localhost:3000/api/user/" + posterid
+                "http://localhost:3000/api/user/" + posterId
             ).then((res) => {
                 return res.json();
             });
@@ -143,17 +140,17 @@ export default {
         },
         async like() {
             if (this.user) {
-                let likeCreditentials = {
-                    posts_id: this.post.id,
-                    users_id: this.user.user_id,
+                let likeCredentials = {
+                    post_id: this.post.id,
+                    user_id: this.utilisateur.user_id,
                 };
                 await fetch("http://localhost:3000/api/like/", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        Authorization: "Bearer " + this.token,
+                        Authorization: "Bearer " + this.utilisateur.token,
                     },
-                    body: JSON.stringify(likeCreditentials),
+                    body: JSON.stringify(likeCredentials),
                 }).then((res) => {
                     return res.json();
                 });
@@ -166,8 +163,7 @@ export default {
             ).then((res) => {
                 return res.json();
             });
-            if (res.data.length != null);
-            return res.data.length;
+            if (res.data.length != null) return res.data.length;
         },
     },
     computed: mapState(["user"]),
@@ -175,9 +171,8 @@ export default {
         this.comments = await this.getComments();
         this.count = await this.counter();
         this.utilisateur = await this.amILogged();
-        console.log(this.utilisateur);
         this.idsMatch();
-        this.whosTheAuthor();
+        await this.whoIsTheAuthor();
     },
 };
 </script>
@@ -226,10 +221,10 @@ p {
 .title {
     background-color: rgb(255, 221, 227);
 }
-.fa-heart:hover {
+.fa-heart:hover, .fa-edit:hover, .fa-paper-plane:hover, .fa-times:hover {
     color: pink;
 }
-.fa-heart:active {
+.fa-heart:active, .fa-edit:active, .fa-paper-plane:active, .fa-times:active {
     color: crimson;
 }
 i {

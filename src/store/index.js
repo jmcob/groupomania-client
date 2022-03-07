@@ -8,7 +8,7 @@ export default createStore({
         logOut(state) {
             localStorage.clear();
             state.user = [];
-            this.$router.push("/");
+            this.$router.replace({ path: '/' })
         },
     },
     actions: {

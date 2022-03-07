@@ -8,7 +8,6 @@
         <OnePost
             @delete-post="deletePost"
             @update-post="updatePost"
-            class="onepost"
             v-for="post in posts"
             :post="post"
             :key="post.id"
@@ -21,6 +20,8 @@
 <script>
 import OnePost from "../components/OnePost";
 import NewPost from "../components/NewPost";
+import { mapActions } from "vuex";
+
 
 export default {
     name: "Posts",
@@ -33,6 +34,7 @@ export default {
     },
 
     methods: {
+        ...mapActions(["amILogged"]),
         async getPosts() {
             const data = await fetch("http://localhost:3000/api/post/").then(
                 (res) => {
@@ -47,7 +49,7 @@ export default {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + this.token,
+                    Authorization: "Bearer " + this.utilisateur.token,
                 },
                 body: post,
             }).then((res) => {
@@ -59,14 +61,14 @@ export default {
         async deletePost(id) {
             const post = await this.getOne(id);
             const json = JSON.stringify({
-                posterid: post.users_id,
-                userid: this.user.user_id,
+                posterId: post.users_id,
+                userId: this.utilisateur.user_id,
             });
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "DELETE",
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + this.token,
+                    Authorization: "Bearer " + this.utilisateur.token,
                 },
                 body: json,
             }).then((res) => {
@@ -75,7 +77,7 @@ export default {
             if (res.message === "Post supprimé") {
                 this.posts = this.posts.filter((post) => post.id !== id);
             } else {
-                alert("Erreur dans la suppresion du post");
+                alert("Erreur dans la suppression du post");
             }
         },
         async updatePost(id, update) {
@@ -83,14 +85,14 @@ export default {
             const json = {
                 ...postToUpdate,
                 text: update,
-                posterid: postToUpdate.users_id,
-                userid: this.user.user_id,
+                posterId: postToUpdate.users_id,
+                userId: this.utilisateur.user_id,
             };
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: "Bearer " + this.token,
+                    Authorization: "Bearer " + this.utilisateur.token,
                 },
                 body: JSON.stringify(json),
             }).then((res) => {
@@ -105,7 +107,6 @@ export default {
                           }
                         : post
                 );
-                console.log;
             } else {
                 alert("Erreur dans la modification du post");
             }
@@ -118,23 +119,16 @@ export default {
             });
             return data.data;
         },
+        /*
         async post() {
             const posts = await this.getPosts();
-            for (let post in posts) {
-                return post;
-            }
+            for (let post in posts) return post;
         },
-    },
-    computed: {
-        token() {
-            return this.$store.state.user.token;
-        },
-        user() {
-            return this.$store.state.user;
-        },
+         */
     },
     async created() {
         this.posts = await this.getPosts();
+        this.utilisateur = await this.amILogged();
     },
 };
 </script>

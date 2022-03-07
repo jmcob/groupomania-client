@@ -1,12 +1,12 @@
 <template>
-    <div class="newcomment">
-        <p v-if="!this.user.username">
+    <div class="new_comment">
+        <p v-if="!this.utilisateur.username">
             <router-link to="/login"> Connectez-vous</router-link> pour
             commenter
         </p>
         <p v-else>
             Vous commentez en tant que
-            <strong> {{ this.user.username }}</strong>
+            <strong> {{ this.utilisateur.username }}</strong>
         </p>
         <div class="form">
             <form @submit.prevent="newComment">
@@ -14,7 +14,6 @@
                     <textarea
                         rows="5"
                         cols="55"
-                        type="text"
                         v-model="text"
                         :label="textLabel"
                         placeholder="Votre commentaire ici"
@@ -32,6 +31,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     data() {
         return {
@@ -39,15 +40,13 @@ export default {
             buttonText: "Nouveau commentaire",
             title: "",
             text: "",
+            utilisateur: [],
         };
     },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        },
-    },
+
     props: ["post"],
     methods: {
+        ...mapActions(["amILogged"]),
         newComment() {
             if (!this.text) {
                 alert(
@@ -57,18 +56,23 @@ export default {
             }
             const newComment = {
                 text: this.text,
-                users_id: this.user.user_id,
-                posts_id: this.post.id,
+                user_id: this.utilisateur.user_id,
+                post_id: this.post.id,
             };
             this.$emit("add-comment", newComment);
             this.text = "";
         },
     },
-};
+    async created() {
+        this.utilisateur = await this.amILogged();
+    }
+}
+
+
 </script>
 
 <style scoped>
-.newcomment {
+.new_comment {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

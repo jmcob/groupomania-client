@@ -4,7 +4,7 @@
         <h2>Bienvenue à toi, {{ this.utilisateur.username }} !</h2>
         <p><router-link to="/posts">Voir les posts</router-link></p>
         <p><router-link to="/profile">Voir ton profil</router-link></p>
-        <button @click="logOut">Deconnexion</button>
+        <button @click="this.logOut">Déconnexion</button>
     </div>
     <div v-else>
         <p>
