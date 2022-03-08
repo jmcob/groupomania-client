@@ -1,10 +1,10 @@
 <template>
     <h1>Bienvenue sur Groupomania</h1>
-    <div v-if="this.utilisateur.logged">
-        <h2>Bienvenue à toi, {{ this.utilisateur.username }} !</h2>
+    <div v-if="this.user.logged">
+        <h2>Bienvenue à toi, {{ this.user.username }} !</h2>
         <p><router-link to="/posts">Voir les posts</router-link></p>
         <p><router-link to="/profile">Voir ton profil</router-link></p>
-        <button @click="this.logOut">Déconnexion</button>
+        <button @click="logOut">Déconnexion</button>
     </div>
     <div v-else>
         <p>
@@ -17,7 +17,6 @@
         </p>
         <p><router-link to="/posts">View all posts</router-link></p>
     </div>
-
     <br />
 </template>
 
@@ -25,19 +24,13 @@
 import { mapMutations, mapActions, mapState } from "vuex";
 
 export default {
-    data() {
-        return {
-            utilisateur: [],
-        };
-    },
     computed: mapState(["user"]),
-
     methods: {
         ...mapMutations(["logOut"]),
-        ...mapActions(["amILogged"]),
+        ...mapActions(["whoAmI"]),
     },
-    async created() {
-        this.utilisateur = await this.amILogged();
+    async beforeMount() {
+        await this.whoAmI();
     },
 };
 </script>

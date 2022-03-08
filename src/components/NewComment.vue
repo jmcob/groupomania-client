@@ -1,12 +1,12 @@
 <template>
     <div class="new_comment">
-        <p v-if="!this.utilisateur.username">
+        <p v-if="!this.user.username">
             <router-link to="/login"> Connectez-vous</router-link> pour
             commenter
         </p>
         <p v-else>
             Vous commentez en tant que
-            <strong> {{ this.utilisateur.username }}</strong>
+            <strong> {{ this.user.username }}</strong>
         </p>
         <div class="form">
             <form @submit.prevent="newComment">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
     data() {
@@ -40,13 +40,12 @@ export default {
             buttonText: "Nouveau commentaire",
             title: "",
             text: "",
-            utilisateur: [],
         };
     },
 
     props: ["post"],
     methods: {
-        ...mapActions(["amILogged"]),
+        ...mapActions(["whoAmI"]),
         newComment() {
             if (!this.text) {
                 alert(
@@ -56,15 +55,17 @@ export default {
             }
             const newComment = {
                 text: this.text,
-                user_id: this.utilisateur.user_id,
+                user_id: this.user.user_id,
                 post_id: this.post.id,
             };
             this.$emit("add-comment", newComment);
             this.text = "";
         },
     },
+    computed: mapState(["user"]),
+
     async created() {
-        this.utilisateur = await this.amILogged();
+        await this.whoAmI();
     }
 }
 

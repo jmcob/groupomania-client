@@ -1,6 +1,6 @@
 <template>
-    <div id="newpost">
-        <div v-if="!this.utilisateur.logged">
+    <div id="new-post">
+        <div v-if="!this.user.logged">
             <p>
                 <router-link to="/login"> Connectez-vous</router-link> pour
                 publier
@@ -9,10 +9,10 @@
         <div v-else>
             <p>
                 Vous postez en tant que
-                <strong> {{ this.utilisateur.username }} </strong>
+                <strong> {{ this.user.username }} </strong>
                 <br />
                 <br />
-                <button @click="logOut">Deconnexion</button>
+                <button @click="logOut">Déconnexion</button>
             </p>
             <form @submit.prevent="newPost">
                 <input
@@ -25,7 +25,6 @@
                 <textarea
                     rows="5"
                     cols="25"
-                    type="text"
                     v-model="text"
                     :label="textLabel"
                     placeholder="Votre texte ici"
@@ -52,16 +51,15 @@ export default {
             title: "",
             text: "",
             user_id: Number,
-            utilisateur: [],
         };
     },
     computed: mapState(["user"]),
     mounted() {
-        this.amILogged();
+        this.whoAmI();
     },
     methods: {
         ...mapMutations(["logOut"]),
-        ...mapActions(["amILogged"]),
+        ...mapActions(["whoAmI"]),
         async newPost() {
             if (!this.text || !this.title) {
                 alert("Please add a full post");
@@ -70,7 +68,7 @@ export default {
             const newPost = {
                 title: this.title,
                 text: this.text,
-                user_id: this.utilisateur.user_id,
+                user_id: this.user.user_id,
             };
             this.$emit("add-post", newPost);
             this.text = "";
@@ -78,13 +76,13 @@ export default {
         },
     },
     async created() {
-        this.utilisateur = await this.amILogged();
+        await this.whoAmI();
     },
 };
 </script>
 
 <style scoped>
-#newpost {
+#new-post {
     border: 1px solid orangered;
     width: 75vw;
     padding-top: 15px;

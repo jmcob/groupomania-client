@@ -1,6 +1,6 @@
 <template>
     <div class="comment_container" v-if="post.id === comment.posts_id">
-        <div class="onecomment">
+        <div class="one-comment">
             <div class="author_date">
                 <h3 class="user_id">
                     {{ this.commenter.username }} le : {{ comment.createdAt }}
@@ -22,13 +22,13 @@ export default {
         };
     },
     mounted() {
-        this.whosTheAuthor();
+        this.whoIsTheAuthor();
     },
     methods: {
-        async whosTheAuthor() {
-            let commenterid = this.comment.users_id;
+        async whoIsTheAuthor() {
+            let commenterId = this.comment.users_id;
             let userData = await fetch(
-                "http://localhost:3000/api/user/" + commenterid
+                "http://localhost:3000/api/user/" + commenterId
             ).then((res) => {
                 return res.json();
             });
@@ -39,7 +39,7 @@ export default {
 };
 </script>
 <style scoped>
-.onecomment {
+.one-comment {
     display: flex;
     flex-direction: column;
     color: midnightblue;

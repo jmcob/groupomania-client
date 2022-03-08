@@ -1,6 +1,6 @@
 <template>
     <div class="post_comments_container">
-        <div class="onepost">
+        <div class="one-post">
             <div class="title_author_date">
                 <h2 class="title">{{ post.title }}</h2>
                 <div class="author_date">
@@ -23,7 +23,7 @@
                     ></textarea>
                 </div>
                 <div class="buttonContainer">
-                    <div @click="like" class="button" v-if="this.utilisateur">
+                    <div @click="like" class="button" v-if="this.user">
                         <p>
                             <i class="fas fa-heart"></i>
                             {{ this.count }}
@@ -62,7 +62,7 @@
             <br />
         </div>
         <div class="comments">
-            <div v-if="!this.utilisateur.username"></div>
+            <div v-if="!this.user.logged"></div>
             <div v-else>
                 <NewComment :post="post" @add-comment="addComment" />
             </div>
@@ -93,20 +93,19 @@ export default {
             itsAMatch: false,
             poster: [],
             count: Number,
-            utilisateur: [],
         };
     },
 
     methods: {
         ...mapMutations(["logOut"]),
-        ...mapActions(["amILogged"]),
+        ...mapActions(["whoAmI"]),
         async addComment(newComment) {
             const comment = JSON.stringify(newComment);
             const data = await fetch("http://localhost:3000/api/comment/", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: "Bearer " + this.utilisateur.token,
+                    Authorization: "Bearer " + this.user.token,
                 },
                 body: comment,
             }).then((res) => {
@@ -125,7 +124,7 @@ export default {
         },
         idsMatch() {
             let posterId = this.post.users_id;
-            let userid = this.utilisateur.user_id;
+            let userid = this.user.user_id;
             this.itsAMatch = posterId === userid;
         },
         async whoIsTheAuthor() {
@@ -142,13 +141,13 @@ export default {
             if (this.user) {
                 let likeCredentials = {
                     post_id: this.post.id,
-                    user_id: this.utilisateur.user_id,
+                    user_id: this.user.user_id,
                 };
                 await fetch("http://localhost:3000/api/like/", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        Authorization: "Bearer " + this.utilisateur.token,
+                        Authorization: "Bearer " + this.user.token,
                     },
                     body: JSON.stringify(likeCredentials),
                 }).then((res) => {
@@ -170,7 +169,7 @@ export default {
     async created() {
         this.comments = await this.getComments();
         this.count = await this.counter();
-        this.utilisateur = await this.amILogged();
+        await this.whoAmI();
         this.idsMatch();
         await this.whoIsTheAuthor();
     },
@@ -181,7 +180,7 @@ export default {
 .post_comments_container {
     border: 1px solid grey;
 }
-.onepost {
+.one-post {
     display: flex;
     flex-direction: column;
     width: 60vw;
