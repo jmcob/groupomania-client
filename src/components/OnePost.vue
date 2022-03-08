@@ -9,6 +9,7 @@
                         {{ post.createdAt }}
                     </h3>
                 </div>
+                <hr />
             </div>
             <div class="text_buttons">
                 <div v-if="hard">
@@ -61,11 +62,13 @@
             </div>
             <br />
         </div>
+        <hr />
         <div class="comments">
             <div v-if="!this.user.logged"></div>
             <div v-else>
                 <NewComment :post="post" @add-comment="addComment" />
             </div>
+
             <OneComment
                 v-for="comment in comments"
                 :comment="comment"
@@ -185,21 +188,19 @@ export default {
 <style scoped>
 .post_comments_container {
     border: 1px solid grey;
+    border-radius: 5px;
+    margin: 5px;
 }
 .one-post {
     display: flex;
     flex-direction: column;
     width: 60vw;
-    margin: 5px;
+    margin: 0px;
 }
 .title {
-    padding: 0px;
     margin: 0px;
 }
-.title_author_date {
-    padding: 0px;
-    margin: 0px;
-}
+
 .author_date {
     display: flex;
     justify-content: space-around;
@@ -209,6 +210,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
 }
 .buttons {
     display: flex;
