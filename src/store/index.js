@@ -7,7 +7,7 @@ export default createStore({
             logged: false,
             user_id: Number,
             username: "",
-            email: ""
+            email: "",
         },
     },
     mutations: {
@@ -18,7 +18,7 @@ export default createStore({
                 logged: false,
                 user_id: Number,
                 username: "",
-                email: ""
+                email: "",
             };
             window.location.reload();
         },
@@ -26,7 +26,7 @@ export default createStore({
     actions: {
         async whoAmI(state) {
             if (localStorage.getItem("userData")) {
-                state.user = JSON.parse(localStorage.getItem("userData"))
+                state.user = JSON.parse(localStorage.getItem("userData"));
                 if (state.user.token !== null) {
                     state.user.logged = true;
                     const userData = await fetch(
@@ -36,10 +36,8 @@ export default createStore({
                     });
                     state.user.username = userData.data.username;
                     state.user.email = userData.data.email;
-                    console.log(state.user)
                     return state.user;
                 }
-
             }
             return state.user;
         },

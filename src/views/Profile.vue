@@ -33,14 +33,19 @@
         <div @click="hard = !hard" class="edit" v-if="hard">
             <i title="Modifier" class="far fa-edit"></i> Modifier
         </div>
-        <div @click="this.updateProfile, (hard = !hard)" class="edit" v-else>
+        <div
+            @click="updateProfile"
+            v-on:click="hard = !hard"
+            class="edit"
+            v-else
+        >
             <p><i class="far fa-paper-plane" title="Envoyer"></i> Envoyer</p>
         </div>
     </div>
 </template>
 
 <script>
-import {mapMutations, mapActions, mapState} from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Profile",
@@ -48,26 +53,43 @@ export default {
         return {
             hard: true,
             updatedUsername: "",
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
         };
     },
     methods: {
         ...mapMutations(["logOut"]),
         ...mapActions(["whoAmI"]),
         async updateProfile() {
+            let id = this.user.user_id;
             const json = {
-                ...this.user,
                 username: this.updatedUsername,
-                userid: this.utilisateur.user_id,
             };
-            console.log(json);
+            const res = await fetch("http://localhost:3000/api/user/" + id, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: "Bearer " + this.user.token,
+                },
+                body: JSON.stringify(json),
+            }).then((res) => {
+                return res.json();
+            });
+            if (res.data.id === id) {
+                this.user.username = this.updatedUsername;
+            } else {
+                alert("Erreur dans la modification du profil");
+            }
         },
     },
-    computed: mapState(["user"]),
-
     async created() {
-        await this.whoAmI();
+        this.user = await this.whoAmI();
     },
-
 };
 </script>
 

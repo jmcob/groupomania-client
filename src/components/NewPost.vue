@@ -1,12 +1,6 @@
 <template>
     <div id="new-post">
-        <div v-if="!this.user.logged">
-            <p>
-                <router-link to="/login"> Connectez-vous</router-link> pour
-                publier
-            </p>
-        </div>
-        <div v-else>
+        <div v-if="user.logged">
             <p>
                 Vous postez en tant que
                 <strong> {{ this.user.username }} </strong>
@@ -37,11 +31,17 @@
                 </button>
             </form>
         </div>
+        <div v-else>
+            <p>
+                <router-link to="/login"> Connectez-vous</router-link> pour
+                publier
+            </p>
+        </div>
     </div>
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 export default {
     data() {
         return {
@@ -51,11 +51,17 @@ export default {
             title: "",
             text: "",
             user_id: Number,
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
         };
     },
-    computed: mapState(["user"]),
-    mounted() {
-        this.whoAmI();
+    async created() {
+        this.user = await this.whoAmI();
     },
     methods: {
         ...mapMutations(["logOut"]),
@@ -74,9 +80,6 @@ export default {
             this.text = "";
             this.title = "";
         },
-    },
-    async created() {
-        await this.whoAmI();
     },
 };
 </script>

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
     data() {
@@ -40,6 +40,13 @@ export default {
             buttonText: "Nouveau commentaire",
             title: "",
             text: "",
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
         };
     },
 
@@ -62,14 +69,10 @@ export default {
             this.text = "";
         },
     },
-    computed: mapState(["user"]),
-
     async created() {
-        await this.whoAmI();
-    }
-}
-
-
+        this.user = await this.whoAmI();
+    },
+};
 </script>
 
 <style scoped>

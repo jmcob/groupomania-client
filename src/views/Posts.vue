@@ -22,7 +22,6 @@ import OnePost from "../components/OnePost";
 import NewPost from "../components/NewPost";
 import { mapActions } from "vuex";
 
-
 export default {
     name: "Posts",
     components: { OnePost, NewPost },
@@ -30,11 +29,18 @@ export default {
         return {
             posts: [],
             updatedText: "",
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
         };
     },
 
     methods: {
-        ...mapActions(["amILogged"]),
+        ...mapActions(["whoAmI"]),
         async getPosts() {
             const data = await fetch("http://localhost:3000/api/post/").then(
                 (res) => {
@@ -49,7 +55,7 @@ export default {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + this.utilisateur.token,
+                    Authorization: "Bearer " + this.user.token,
                 },
                 body: post,
             }).then((res) => {
@@ -62,13 +68,13 @@ export default {
             const post = await this.getOne(id);
             const json = JSON.stringify({
                 posterId: post.users_id,
-                userId: this.utilisateur.user_id,
+                userId: this.user.user_id,
             });
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "DELETE",
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + this.utilisateur.token,
+                    Authorization: "Bearer " + this.user.token,
                 },
                 body: json,
             }).then((res) => {
@@ -86,13 +92,13 @@ export default {
                 ...postToUpdate,
                 text: update,
                 posterId: postToUpdate.users_id,
-                userId: this.utilisateur.user_id,
+                userId: this.user.user_id,
             };
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: "Bearer " + this.utilisateur.token,
+                    Authorization: "Bearer " + this.user.token,
                 },
                 body: JSON.stringify(json),
             }).then((res) => {
@@ -128,7 +134,7 @@ export default {
     },
     async created() {
         this.posts = await this.getPosts();
-        this.utilisateur = await this.amILogged();
+        this.user = await this.whoAmI();
     },
 };
 </script>

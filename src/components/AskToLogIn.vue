@@ -21,16 +21,27 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
-    computed: mapState(["user"]),
+    data() {
+        return {
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
+        };
+    },
     methods: {
         ...mapMutations(["logOut"]),
         ...mapActions(["whoAmI"]),
     },
-    async beforeMount() {
-        await this.whoAmI();
+
+    async created() {
+        this.user = await this.whoAmI();
     },
 };
 </script>

@@ -79,7 +79,7 @@
 <script>
 import OneComment from "./OneComment.vue";
 import NewComment from "./NewComment.vue";
-import { mapMutations, mapActions, mapState } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
     components: { OneComment, NewComment },
@@ -93,6 +93,13 @@ export default {
             itsAMatch: false,
             poster: [],
             count: Number,
+            user: {
+                token: "",
+                logged: false,
+                user_id: Number,
+                username: "",
+                email: "",
+            },
         };
     },
 
@@ -165,11 +172,10 @@ export default {
             if (res.data.length != null) return res.data.length;
         },
     },
-    computed: mapState(["user"]),
     async created() {
         this.comments = await this.getComments();
         this.count = await this.counter();
-        await this.whoAmI();
+        this.user = await this.whoAmI();
         this.idsMatch();
         await this.whoIsTheAuthor();
     },
@@ -220,10 +226,16 @@ p {
 .title {
     background-color: rgb(255, 221, 227);
 }
-.fa-heart:hover, .fa-edit:hover, .fa-paper-plane:hover, .fa-times:hover {
+.fa-heart:hover,
+.fa-edit:hover,
+.fa-paper-plane:hover,
+.fa-times:hover {
     color: pink;
 }
-.fa-heart:active, .fa-edit:active, .fa-paper-plane:active, .fa-times:active {
+.fa-heart:active,
+.fa-edit:active,
+.fa-paper-plane:active,
+.fa-times:active {
     color: crimson;
 }
 i {
