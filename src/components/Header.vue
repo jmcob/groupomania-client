@@ -1,9 +1,13 @@
 <template>
-        <router-link to="/"
-                ><img
-                        class="logo"
-                        alt="Vue logo"
-                        src="../assets/icon.svg
+    <router-link to="/">
+        <div id="header">
+            <img
+                class="logo"
+                alt="Vue logo"
+                src="../assets/icon.svg
                         "
-        /></router-link>
+            />
+            <h1>Groupomania</h1>
+        </div>
+    </router-link>
 </template>

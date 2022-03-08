@@ -1,5 +1,6 @@
 <template>
     <Header />
+
     <router-view></router-view>
     <Footer />
 </template>
@@ -31,8 +32,23 @@ export default {
     flex-direction: column;
     align-items: center;
 }
+#header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+}
 .logo {
     width: 200px;
+}
+
+body {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 960px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: white;
 }
 button {
     background-color: pink;
@@ -43,6 +59,7 @@ button {
     border: 1px solid crimson;
     text-decoration: none;
     font-size: large;
+    box-shadow: 5px 5px grey;
 }
 button,
 a:visited {

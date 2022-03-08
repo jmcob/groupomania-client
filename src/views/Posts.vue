@@ -1,6 +1,6 @@
 <template>
     <div id="posts_view">
-        <h1 id="posts_view_title">Tous les posts</h1>
+        <h2 id="posts_view_title">- Tous les posts -</h2>
         <br />
         <NewPost @add-post="addPost" />
         <br />

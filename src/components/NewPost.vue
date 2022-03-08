@@ -3,9 +3,7 @@
         <div v-if="user.logged">
             <p>
                 Vous postez en tant que
-                <strong> {{ this.user.username }} </strong>
-                <br />
-                <br />
+                <strong> {{ this.user.username }}</strong> -
                 <button @click="logOut">Déconnexion</button>
             </p>
             <form @submit.prevent="newPost">
