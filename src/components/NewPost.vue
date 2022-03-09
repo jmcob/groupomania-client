@@ -2,7 +2,7 @@
     <div id="new-post">
         <div v-if="user.logged">
             <p>
-                Vous postez en tant que
+                Bonjour
                 <strong> {{ this.user.username }}</strong> -
                 <button @click="logOut">Déconnexion</button>
             </p>
@@ -48,7 +48,6 @@ export default {
             buttonText: "Nouveau post",
             title: "",
             text: "",
-            user_id: Number,
             user: {
                 token: "",
                 logged: false,
@@ -84,15 +83,18 @@ export default {
 
 <style scoped>
 #new-post {
-    border: 1px solid orangered;
-    width: 75vw;
+    border: 1px solid crimson;
+    width: 95vw;
+    min-width: 300px;
     padding-top: 15px;
     padding-bottom: 25px;
     border-radius: 5px;
     background-color: pink;
+    box-shadow: 5px 5px grey;
 }
 input,
 textarea {
     width: 30vw;
+    min-width: 280px;
 }
 </style>

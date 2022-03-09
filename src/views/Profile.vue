@@ -1,8 +1,8 @@
 <template>
     <div id="container">
-        <h1>Profil</h1>
+        <h2>Profil</h2>
         <div v-if="hard">
-            <h2>{{ this.user.username }}</h2>
+            <h3>{{ this.user.username }}</h3>
         </div>
         <div v-else>
             <input
@@ -102,6 +102,8 @@ export default {
     padding: 15px;
     border: 1px solid crimson;
     border-radius: 5px;
+    box-shadow: 5px 5px grey;
+    font-size: larger;
 }
 .token {
     width: 300px;

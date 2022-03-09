@@ -1,12 +1,12 @@
 <template>
-    <h2>Bienvenue sur notre réseau social</h2>
     <div v-if="this.user.logged">
-        <h3>Bonjour {{ this.user.username }} !</h3>
+        <h2>Bonjour {{ this.user.username }} !</h2>
         <p><router-link to="/posts">Voir les posts</router-link></p>
         <p><router-link to="/profile">Voir ton profil</router-link></p>
         <button @click="logOut">Déconnexion</button>
     </div>
     <div v-else>
+        <h2>Bonjour visiteur !</h2>
         <p>
             <button>
                 <router-link to="/login"> Connectez-vous</router-link>
@@ -51,6 +51,7 @@ h2 {
     background-color: pink;
     border: 1px solid crimson;
     border-radius: 5px;
-    width: 75%;
+    padding: 10px;
+    box-shadow: -5px -5px rgb(255, 215, 221);
 }
 </style>

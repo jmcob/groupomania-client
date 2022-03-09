@@ -190,12 +190,17 @@ export default {
     border: 1px solid grey;
     border-radius: 5px;
     margin: 5px;
+    width: 95vw;
 }
 .one-post {
     display: flex;
     flex-direction: column;
-    width: 60vw;
     margin: 0px;
+}
+.title_author_date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .title {
     margin: 0px;

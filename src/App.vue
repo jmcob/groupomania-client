@@ -1,6 +1,5 @@
 <template>
     <Header />
-
     <router-view></router-view>
     <Footer />
 </template>
@@ -19,37 +18,35 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Hubballi&display=swap");
 
 #app {
-    font-family: "Martel", sans-serif;
+    /* font-family: "Fredoka", sans-serif; */
+    font-family: "Hubballi", cursive;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 #header {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+a {
     text-decoration: none;
+    font-weight: bold;
+    color: gray;
 }
 .logo {
-    width: 200px;
+    width: 80px;
 }
 
-body {
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 960px;
-    padding-right: 10px;
-    padding-left: 10px;
-    background-color: white;
-}
 button {
     background-color: pink;
     color: white;
@@ -58,12 +55,16 @@ button {
     border-radius: 5px;
     border: 1px solid crimson;
     text-decoration: none;
-    font-size: large;
+    font-size: larger;
     box-shadow: 5px 5px grey;
+    font-family: "Fredoka", sans-serif;
 }
 button,
 a:visited {
     color: #2c3e50;
     text-decoration: none;
+}
+p {
+    font-size: larger;
 }
 </style>
