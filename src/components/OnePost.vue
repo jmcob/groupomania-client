@@ -189,8 +189,8 @@ export default {
 .post_comments_container {
     border: 1px solid grey;
     border-radius: 5px;
-    margin: 5px;
-    width: 95vw;
+    max-width: 850px;
+    margin: 0 auto;
 }
 .one-post {
     display: flex;

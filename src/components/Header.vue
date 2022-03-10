@@ -11,3 +11,9 @@
         </div>
     </router-link>
 </template>
+
+<style scoped>
+h1 {
+    padding-right: 20px;
+}
+</style>

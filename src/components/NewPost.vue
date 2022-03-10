@@ -84,17 +84,15 @@ export default {
 <style scoped>
 #new-post {
     border: 1px solid crimson;
-    width: 95vw;
-    min-width: 300px;
-    padding-top: 15px;
-    padding-bottom: 25px;
+    max-width: 750px;
+    margin: 0 10vw;
+    padding: 15px;
     border-radius: 5px;
     background-color: pink;
     box-shadow: 5px 5px grey;
 }
 input,
 textarea {
-    width: 30vw;
-    min-width: 280px;
+    color: black;
 }
 </style>
