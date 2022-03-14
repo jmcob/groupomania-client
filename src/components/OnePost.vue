@@ -153,7 +153,7 @@ export default {
                     post_id: this.post.id,
                     user_id: this.user.user_id,
                 };
-                await fetch("http://localhost:3000/api/like/", {
+                const res = await fetch("http://localhost:3000/api/like/", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
@@ -163,7 +163,7 @@ export default {
                 }).then((res) => {
                     return res.json();
                 });
-                this.count++;
+                if (res.data) this.count++;
             }
         },
         // async unlike() {
