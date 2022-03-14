@@ -8,6 +8,7 @@ export default createStore({
             user_id: Number,
             username: "",
             email: "",
+            admin: Number,
         },
     },
     mutations: {
@@ -19,6 +20,7 @@ export default createStore({
                 user_id: Number,
                 username: "",
                 email: "",
+                admin: Number,
             };
             window.location.reload();
         },
@@ -36,9 +38,12 @@ export default createStore({
                     });
                     state.user.username = userData.data.username;
                     state.user.email = userData.data.email;
+                    state.user.admin = userData.data.admin;
                     return state.user;
                 }
             }
+            state.user = {};
+            state.user.logged = false;
             return state.user;
         },
     },

@@ -30,7 +30,7 @@
                             {{ this.count }}
                         </p>
                     </div>
-                    <div v-if="itsAMatch" class="buttons">
+                    <div v-if="idsMatch" class="buttons">
                         <div class="button" v-if="hard">
                             <p @click="hard = !hard">
                                 <i class="far fa-edit"></i>Modifier
@@ -93,7 +93,6 @@ export default {
             comments: [],
             hard: true, // if 'hard' property is  set to true, post is editable with a button
             updatedText: "",
-            itsAMatch: false,
             poster: [],
             count: Number,
             user: {
@@ -135,7 +134,8 @@ export default {
         idsMatch() {
             let posterId = this.post.users_id;
             let userid = this.user.user_id;
-            this.itsAMatch = posterId === userid;
+            let itsAMatch = posterId === userid || this.user.admin === 1;
+            return itsAMatch;
         },
         async whoIsTheAuthor() {
             let posterId = this.post.users_id;
@@ -166,6 +166,29 @@ export default {
                 this.count++;
             }
         },
+        // async unlike() {
+        //     const post = await this.counter(id);
+        //     const json = JSON.stringify({
+        //         poster_id: post.users_id,
+        //         user_id: this.user.user_id,
+        //         admin: this.user.admin,
+        //     });
+        //     const res = await fetch("http://localhost:3000/api/post/" + id, {
+        //         method: "DELETE",
+        //         headers: {
+        //             "content-type": "application/json",
+        //             Authorization: "Bearer " + this.user.token,
+        //         },
+        //         body: json,
+        //     }).then((res) => {
+        //         return res.json();
+        //     });
+        //     if (res.message === "Post supprimé") {
+        //         this.posts = this.posts.filter((post) => post.id !== id);
+        //     } else {
+        //         alert("Erreur dans la suppression du post");
+        //     }
+        // },
         async counter() {
             const res = await fetch(
                 "http://localhost:3000/api/like/" + this.post.id

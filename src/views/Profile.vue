@@ -41,6 +41,12 @@
         >
             <p><i class="far fa-paper-plane" title="Envoyer"></i> Envoyer</p>
         </div>
+        <div>
+            <p>
+                <i class="delete fas fa-times" @click="deleteUser"> </i>
+                Supprimer
+            </p>
+        </div>
     </div>
 </template>
 
@@ -82,6 +88,24 @@ export default {
             });
             if (res.data.id === id) {
                 this.user.username = this.updatedUsername;
+            } else {
+                alert("Erreur dans la modification du profil");
+            }
+        },
+        async deleteUser() {
+            let id = this.user.user_id;
+            const res = await fetch("http://localhost:3000/api/user/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: "Bearer " + this.user.token,
+                },
+            }).then((res) => {
+                return res.json();
+            });
+            if (res.message) {
+                alert("Utilisateur supprimé");
+                this.$router.push("/");
             } else {
                 alert("Erreur dans la modification du profil");
             }

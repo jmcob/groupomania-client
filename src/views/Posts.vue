@@ -67,8 +67,9 @@ export default {
         async deletePost(id) {
             const post = await this.getOne(id);
             const json = JSON.stringify({
-                posterId: post.users_id,
-                userId: this.user.user_id,
+                poster_id: post.users_id,
+                user_id: this.user.user_id,
+                admin: this.user.admin,
             });
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "DELETE",
@@ -91,8 +92,9 @@ export default {
             const json = {
                 ...postToUpdate,
                 text: update,
-                posterId: postToUpdate.users_id,
-                userId: this.user.user_id,
+                poster_id: postToUpdate.users_id,
+                user_id: this.user.user_id,
+                admin: this.user.admin,
             };
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "PUT",
