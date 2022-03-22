@@ -23,13 +23,29 @@
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
+
                 <div class="buttonContainer">
-                    <div @click="like" class="button" v-if="this.user">
-                        <p>
-                            <i class="fas fa-heart"></i>
-                            {{ this.count }}
-                        </p>
+                    <div v-if="this.user">
+                        <div
+                            v-if="this.postLikedByCurrentUser"
+                            @click="unlike"
+                            :class="{
+                                activeHeart: this.postLikedByCurrentUser,
+                            }"
+                        >
+                            <p>
+                                <i class="fas fa-heart"></i>
+                                {{ this.count }}
+                            </p>
+                        </div>
+                        <div v-else @click="like">
+                            <p>
+                                <i class="fas fa-heart"></i>
+                                {{ this.count }}
+                            </p>
+                        </div>
                     </div>
+
                     <div v-if="idsMatch" class="buttons">
                         <div class="button" v-if="hard">
                             <p @click="hard = !hard">
@@ -95,6 +111,7 @@ export default {
             updatedText: "",
             poster: [],
             count: Number,
+            postLikedByCurrentUser: false,
             user: {
                 token: "",
                 logged: false,
@@ -164,7 +181,10 @@ export default {
                 }).then((res) => {
                     return res.json();
                 });
-                if (res.data) this.count++;
+                if (res.data) {
+                    this.count++;
+                    this.postLikedByCurrentUser = true;
+                }
             }
         },
         async unlike() {
@@ -185,6 +205,7 @@ export default {
             });
             if (res.message) {
                 this.count--;
+                this.postLikedByCurrentUser = false;
             } else {
                 alert("Erreur dans la suppression du like");
             }
@@ -197,6 +218,29 @@ export default {
             });
             if (res.data.length != null) return res.data.length;
         },
+        async getOneLike() {
+            const json = JSON.stringify({
+                post_id: this.post.id,
+                user_id: this.user.user_id,
+            });
+            const res = await fetch(
+                "http://localhost:3000/api/like/getASpecificLike",
+                {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        Authorization: "Bearer " + this.user.token,
+                    },
+                    body: json,
+                }
+            ).then((res) => {
+                return res.json();
+            });
+            if (res.data) {
+                let liked = true;
+                return liked;
+            }
+        },
     },
     async created() {
         this.comments = await this.getComments();
@@ -204,11 +248,15 @@ export default {
         this.user = await this.whoAmI();
         this.idsMatch();
         await this.whoIsTheAuthor();
+        this.postLikedByCurrentUser = await this.getOneLike();
     },
 };
 </script>
 
 <style scoped>
+.activeHeart {
+    color: crimson;
+}
 .post_comments_container {
     border: 1px solid grey;
     border-radius: 5px;
