@@ -149,9 +149,10 @@ export default {
         },
         async like() {
             if (this.user) {
-                let likeCredentials = {
+                let json = {
                     post_id: this.post.id,
                     user_id: this.user.user_id,
+                    admin: this.user.admin,
                 };
                 const res = await fetch("http://localhost:3000/api/like/", {
                     method: "POST",
@@ -159,36 +160,35 @@ export default {
                         "content-type": "application/json",
                         Authorization: "Bearer " + this.user.token,
                     },
-                    body: JSON.stringify(likeCredentials),
+                    body: JSON.stringify(json),
                 }).then((res) => {
                     return res.json();
                 });
                 if (res.data) this.count++;
             }
         },
-        // async unlike() {
-        //     const post = await this.counter(id);
-        //     const json = JSON.stringify({
-        //         poster_id: post.users_id,
-        //         user_id: this.user.user_id,
-        //         admin: this.user.admin,
-        //     });
-        //     const res = await fetch("http://localhost:3000/api/post/" + id, {
-        //         method: "DELETE",
-        //         headers: {
-        //             "content-type": "application/json",
-        //             Authorization: "Bearer " + this.user.token,
-        //         },
-        //         body: json,
-        //     }).then((res) => {
-        //         return res.json();
-        //     });
-        //     if (res.message === "Post supprimé") {
-        //         this.posts = this.posts.filter((post) => post.id !== id);
-        //     } else {
-        //         alert("Erreur dans la suppression du post");
-        //     }
-        // },
+        async unlike() {
+            const json = JSON.stringify({
+                post_id: this.post.id,
+                user_id: this.user.user_id,
+                admin: this.user.admin,
+            });
+            const res = await fetch("http://localhost:3000/api/like/", {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + this.user.token,
+                },
+                body: json,
+            }).then((res) => {
+                return res.json();
+            });
+            if (res.message) {
+                this.count--;
+            } else {
+                alert("Erreur dans la suppression du like");
+            }
+        },
         async counter() {
             const res = await fetch(
                 "http://localhost:3000/api/like/" + this.post.id
