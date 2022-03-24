@@ -23,7 +23,15 @@
                 >
                 </textarea>
                 <br />
-
+                <input
+                    class="file-input"
+                    type="file"
+                    accept="image/*"
+                    name="image"
+                    ref="image"
+                    @change="handleFileUpload($event)"
+                />
+                <br />
                 <button>
                     {{ buttonText }}
                 </button>
@@ -55,6 +63,9 @@ export default {
                 username: "",
                 email: "",
             },
+            form: {
+                image: "",
+            },
         };
     },
     async created() {
@@ -63,17 +74,27 @@ export default {
     methods: {
         ...mapMutations(["logOut"]),
         ...mapActions(["whoAmI"]),
+        handleFileUpload(e) {
+            this.form.image = e.target.files[0];
+        },
         async newPost() {
             if (!this.text || !this.title) {
                 alert("Please add a full post");
                 return;
             }
-            const newPost = {
+
+            const post = {
                 title: this.title,
                 text: this.text,
                 user_id: this.user.user_id,
+                users_id: this.user.user_id,
             };
-            this.$emit("add-post", newPost);
+            let formData = new FormData();
+
+            formData.append("post", post);
+            formData.append("image", this.form.image);
+
+            this.$emit("add-post", formData);
             this.text = "";
             this.title = "";
         },

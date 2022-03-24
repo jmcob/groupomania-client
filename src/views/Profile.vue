@@ -75,6 +75,7 @@ export default {
             let id = this.user.user_id;
             const json = {
                 username: this.updatedUsername,
+                user_id: id,
             };
             const res = await fetch("http://localhost:3000/api/user/" + id, {
                 method: "PUT",
@@ -94,12 +95,16 @@ export default {
         },
         async deleteUser() {
             let id = this.user.user_id;
+            let json = {
+                user_id: id,
+            };
             const res = await fetch("http://localhost:3000/api/user/" + id, {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: "Bearer " + this.user.token,
                 },
+                body: JSON.stringify(json),
             }).then((res) => {
                 return res.json();
             });

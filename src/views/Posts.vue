@@ -49,15 +49,15 @@ export default {
             );
             return data.data;
         },
-        async addPost(newPost) {
-            const post = JSON.stringify(newPost);
+        async addPost(formData) {
             const data = await fetch("http://localhost:3000/api/post/", {
                 method: "POST",
                 headers: {
-                    "content-type": "application/json",
+                    Accept: "application/json",
+                    "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + this.user.token,
                 },
-                body: post,
+                body: formData,
             }).then((res) => {
                 return res.json();
             });
