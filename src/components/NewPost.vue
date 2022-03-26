@@ -71,15 +71,16 @@ export default {
     async created() {
         this.user = await this.whoAmI();
     },
+    emit: {},
     methods: {
         ...mapMutations(["logOut"]),
         ...mapActions(["whoAmI"]),
         handleFileUpload(e) {
             this.form.image = e.target.files[0];
         },
-        async newPost() {
+        newPost() {
             if (!this.text || !this.title) {
-                alert("Please add a full post");
+                console.warn("Please add a full post");
                 return;
             }
 
@@ -90,9 +91,9 @@ export default {
                 users_id: this.user.user_id,
             };
             let formData = new FormData();
-
             formData.append("post", post);
             formData.append("image", this.form.image);
+            console.log(formData); // Form Data vide
 
             this.$emit("add-post", formData);
             this.text = "";
