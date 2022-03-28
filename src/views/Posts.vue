@@ -50,14 +50,12 @@ export default {
             return data.data;
         },
         async addPost(formData) {
-            const form = JSON.stringify(formData);
-            console.log(form); //objet vide
             const data = await fetch("http://localhost:3000/api/post/", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + this.user.token,
                 },
-                body: form,
+                body: formData,
             }).then((res) => {
                 return res.json();
             });

@@ -90,10 +90,13 @@ export default {
                 user_id: this.user.user_id,
                 users_id: this.user.user_id,
             };
+            const spost = JSON.stringify(post);
             let formData = new FormData();
-            formData.append("post", post);
+            formData.append("post", spost);
             formData.append("image", this.form.image);
-            console.log(formData); // Form Data vide
+            for (let i of formData) {
+                console.log(i);
+            }
 
             this.$emit("add-post", formData);
             this.text = "";
