@@ -94,9 +94,6 @@ export default {
             let formData = new FormData();
             formData.append("post", spost);
             formData.append("image", this.form.image);
-            for (let i of formData) {
-                console.log(i);
-            }
 
             this.$emit("add-post", formData);
             this.text = "";
@@ -109,7 +106,7 @@ export default {
 <style scoped>
 #new-post {
     border: 1px solid crimson;
-    max-width: 750px;
+    max-width: 80vw;
     margin: 0 10vw;
     padding: 15px;
     border-radius: 5px;

@@ -35,6 +35,8 @@ export default {
                 user_id: Number,
                 username: "",
                 email: "",
+                admin: Boolean,
+                avatar: "",
             },
         };
     },
@@ -125,12 +127,6 @@ export default {
             });
             return data.data;
         },
-        /*
-        async post() {
-            const posts = await this.getPosts();
-            for (let post in posts) return post;
-        },
-         */
     },
     async created() {
         this.posts = await this.getPosts();

@@ -9,6 +9,7 @@ export default createStore({
             username: "",
             email: "",
             admin: Number,
+            avatar: "",
         },
     },
     mutations: {
@@ -39,6 +40,8 @@ export default createStore({
                     state.user.username = userData.data.username;
                     state.user.email = userData.data.email;
                     state.user.admin = userData.data.admin;
+                    state.user.avatar = userData.data.avatar;
+                    console.log(state.user.avatar);
                     return state.user;
                 }
             }

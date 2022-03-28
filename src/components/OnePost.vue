@@ -5,6 +5,10 @@
                 <h2 class="title">{{ post.title }}</h2>
                 <div class="author_date">
                     <h3 class="user_id">
+                        <img
+                            :src="this.poster.avatar"
+                            alt="image de l'auteur du post"
+                        />
                         <em>{{ this.poster.username }}</em> le
                         {{ post.createdAt }}
                     </h3>
@@ -23,7 +27,9 @@
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
-
+                <div class="img" v-if="post.image">
+                    <img :src="post.image" alt="image postée" />
+                </div>
                 <div class="buttonContainer">
                     <div v-if="this.user">
                         <div
@@ -163,6 +169,7 @@ export default {
             });
             this.poster.username = userData.data.username;
             this.poster.email = userData.data.email;
+            this.poster.avatar = userData.data.avatar;
         },
         async like() {
             if (this.user) {
@@ -260,7 +267,7 @@ export default {
 .post_comments_container {
     border: 1px solid grey;
     border-radius: 5px;
-    max-width: 850px;
+    width: 80vw;
     margin: 0 auto;
 }
 .one-post {
@@ -276,7 +283,9 @@ export default {
 .title {
     margin: 0px;
 }
-
+.img img {
+    width: 300px;
+}
 .author_date {
     display: flex;
     justify-content: space-around;
