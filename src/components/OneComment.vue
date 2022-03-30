@@ -1,5 +1,5 @@
 <template>
-    <div class="comment_container" v-if="post.id === comment.posts_id">
+    <div class="comment_container" v-if="post.id === comment.post_id">
         <div class="one-comment">
             <div class="author_date">
                 <h3 class="user_id">
@@ -29,7 +29,7 @@ export default {
 
     methods: {
         async whoIsTheAuthor() {
-            let commenterId = this.comment.users_id;
+            let commenterId = this.comment.user_id;
             let userData = await fetch(
                 "http://localhost:3000/api/user/" + commenterId
             ).then((res) => {

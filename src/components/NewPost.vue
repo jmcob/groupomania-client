@@ -88,7 +88,6 @@ export default {
                 title: this.title,
                 text: this.text,
                 user_id: this.user.user_id,
-                users_id: this.user.user_id,
             };
             const spost = JSON.stringify(post);
             let formData = new FormData();

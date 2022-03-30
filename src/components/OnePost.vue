@@ -6,6 +6,7 @@
                 <div class="author_date">
                     <h3 class="user_id">
                         <img
+                            class="avatar"
                             :src="this.poster.avatar"
                             alt="image de l'auteur du post"
                         />
@@ -133,7 +134,7 @@ export default {
         ...mapActions(["whoAmI"]),
         async addComment(newComment) {
             const comment = JSON.stringify(newComment);
-            const data = await fetch("http://localhost:3000/api/comment/", {
+            const res = await fetch("http://localhost:3000/api/comment/", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -143,33 +144,33 @@ export default {
             }).then((res) => {
                 return res.json();
             });
-            const newBornComment = data.data;
+            const newBornComment = res.data;
             this.comments = [newBornComment, ...this.comments];
         },
         async getComments() {
-            const data = await fetch("http://localhost:3000/api/comment/").then(
+            const res = await fetch("http://localhost:3000/api/comment/").then(
                 (res) => {
                     return res.json();
                 }
             );
-            return data.data;
+            return res.data;
         },
         idsMatch() {
-            let posterId = this.post.users_id;
+            let posterId = this.post.user_id;
             let userid = this.user.user_id;
             let itsAMatch = posterId === userid || this.user.admin === 1;
             return itsAMatch;
         },
         async whoIsTheAuthor() {
-            let posterId = this.post.users_id;
-            let userData = await fetch(
+            let posterId = this.post.user_id;
+            let res = await fetch(
                 "http://localhost:3000/api/user/" + posterId
             ).then((res) => {
                 return res.json();
             });
-            this.poster.username = userData.data.username;
-            this.poster.email = userData.data.email;
-            this.poster.avatar = userData.data.avatar;
+            this.poster.username = res.data.username;
+            this.poster.email = res.data.email;
+            this.poster.avatar = res.data.avatar;
         },
         async like() {
             if (this.user) {
@@ -285,6 +286,10 @@ export default {
 }
 .img img {
     width: 300px;
+}
+.avatar {
+    width: 35px;
+    height: 35px;
 }
 .author_date {
     display: flex;

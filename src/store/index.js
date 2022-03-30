@@ -8,7 +8,7 @@ export default createStore({
             user_id: Number,
             username: "",
             email: "",
-            admin: Number,
+            admin: Boolean,
             avatar: "",
         },
     },
@@ -21,7 +21,8 @@ export default createStore({
                 user_id: Number,
                 username: "",
                 email: "",
-                admin: Number,
+                admin: Boolean,
+                avatar: "",
             };
             window.location.reload();
         },
@@ -41,7 +42,7 @@ export default createStore({
                     state.user.email = userData.data.email;
                     state.user.admin = userData.data.admin;
                     state.user.avatar = userData.data.avatar;
-                    console.log(state.user.avatar);
+                    console.log(state.user);
                     return state.user;
                 }
             }

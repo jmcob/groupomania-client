@@ -43,7 +43,6 @@ export default {
                 password: this.password,
             };
             let userJSON = JSON.stringify(user);
-            console.log(userJSON);
             const res = await fetch("http://localhost:3000/api/user/signup", {
                 method: "POST",
                 headers: {

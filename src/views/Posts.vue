@@ -52,7 +52,7 @@ export default {
             return data.data;
         },
         async addPost(formData) {
-            const data = await fetch("http://localhost:3000/api/post/", {
+            const res = await fetch("http://localhost:3000/api/post/", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + this.user.token,
@@ -61,13 +61,13 @@ export default {
             }).then((res) => {
                 return res.json();
             });
-            const newBornPost = data.data;
+            const newBornPost = res.data;
             this.posts = [newBornPost, ...this.posts];
         },
         async deletePost(id) {
             const post = await this.getOne(id);
             const json = JSON.stringify({
-                poster_id: post.users_id,
+                poster_id: post.user_id,
                 user_id: this.user.user_id,
                 admin: this.user.admin,
             });
@@ -92,7 +92,7 @@ export default {
             const json = {
                 ...postToUpdate,
                 text: update,
-                poster_id: postToUpdate.users_id,
+                poster_id: postToUpdate.user_id,
                 user_id: this.user.user_id,
                 admin: this.user.admin,
             };
