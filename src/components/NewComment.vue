@@ -1,22 +1,23 @@
 <template>
     <div class="new_comment">
-        <p v-if="!this.user.username">
-            <router-link to="/login"> Connectez-vous</router-link> pour
-            commenter
-        </p>
-        <p v-else>
-            Vous commentez en tant que
-            <strong> {{ this.user.username }}</strong>
-        </p>
-        <div class="form">
-            <form @submit.prevent="newComment">
+        <form @submit.prevent="newComment">
+            <p v-if="!this.user.username">
+                <router-link to="/login"> Connectez-vous</router-link> pour
+                commenter
+            </p>
+            <p v-else>
+                Vous commentez en tant que
+                <strong> {{ this.user.username }}</strong>
+            </p>
+            <div class="form">
                 <div class="textarea">
+                    <label for="textLabel">Nouveau commentaire :</label>
                     <textarea
+                        aria-label="textarea"
                         rows="5"
                         cols="55"
                         v-model="text"
-                        :label="textLabel"
-                        placeholder="Votre commentaire ici"
+                        name="textLabel"
                     >
                     </textarea>
                 </div>
@@ -25,8 +26,8 @@
                         {{ buttonText }}
                     </button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -36,7 +37,6 @@ import { mapActions } from "vuex";
 export default {
     data() {
         return {
-            textLabel: "Contenu du commentaire",
             buttonText: "Nouveau commentaire",
             title: "",
             text: "",
@@ -88,9 +88,11 @@ textarea {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: flex-end;
 }
 form {
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 </style>

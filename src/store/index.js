@@ -42,7 +42,6 @@ export default createStore({
                     state.user.email = userData.data.email;
                     state.user.admin = userData.data.admin;
                     state.user.avatar = userData.data.avatar;
-                    console.log(state.user);
                     return state.user;
                 }
             }

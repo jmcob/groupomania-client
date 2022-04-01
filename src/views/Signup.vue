@@ -52,7 +52,6 @@ export default {
             }).then((res) => {
                 return res.json();
             });
-            console.log(res.message);
             this.$router.push("/");
         },
     },

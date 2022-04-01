@@ -7,19 +7,21 @@
                 <button @click="logOut">Déconnexion</button>
             </p>
             <form @submit.prevent="newPost">
+                <label for="titleLabel">Titre du post </label>
                 <input
                     type="text"
                     v-model="title"
-                    :label="titleLabel"
-                    placeholder="Titre de votre post"
+                    name="titleLabel"
+                    aria-label="postTitle"
                 />
                 <br />
+                <label for="textLabel">Texte du post </label>
                 <textarea
                     rows="5"
                     cols="25"
                     v-model="text"
-                    :label="textLabel"
-                    placeholder="Votre texte ici"
+                    name="textLabel"
+                    aria-label="postContent"
                 >
                 </textarea>
                 <br />
@@ -51,8 +53,6 @@ import { mapMutations, mapActions } from "vuex";
 export default {
     data() {
         return {
-            titleLabel: "Titre du post :",
-            textLabel: "Contenu du post :",
             buttonText: "Nouveau post",
             title: "",
             text: "",

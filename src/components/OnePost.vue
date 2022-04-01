@@ -10,8 +10,8 @@
                             :src="this.poster.avatar"
                             alt="image de l'auteur du post"
                         />
-                        <em>{{ this.poster.username }}</em> le
-                        {{ post.createdAt }}
+                        <em>{{ this.poster.username }}</em>,
+                        {{ this.postInterval }}
                     </h3>
                 </div>
                 <hr />
@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div v-if="idsMatch" class="buttons">
+                    <div v-if="this.match" class="buttons">
                         <div class="button" v-if="hard">
                             <p @click="hard = !hard">
                                 <i class="far fa-edit"></i>Modifier
@@ -114,17 +114,20 @@ export default {
     data() {
         return {
             comments: [],
-            hard: true, // if 'hard' property is  set to true, post is editable with a button
+            hard: true, // if 'hard' property is  set to false, post is editable
             updatedText: "",
             poster: [],
             count: Number,
             postLikedByCurrentUser: false,
+            match: Boolean,
+            postInterval: "",
             user: {
                 token: "",
                 logged: false,
                 user_id: Number,
                 username: "",
                 email: "",
+                admin: Boolean
             },
         };
     },
@@ -145,6 +148,7 @@ export default {
                 return res.json();
             });
             const newBornComment = res.data;
+            newBornComment.createdAt = "maintenant";
             this.comments = [newBornComment, ...this.comments];
         },
         async getComments() {
@@ -158,7 +162,7 @@ export default {
         idsMatch() {
             let posterId = this.post.user_id;
             let userid = this.user.user_id;
-            let itsAMatch = posterId === userid || this.user.admin === 1;
+            let itsAMatch = posterId === userid || this.user.admin === true;
             return itsAMatch;
         },
         async whoIsTheAuthor() {
@@ -249,14 +253,28 @@ export default {
                 return liked;
             }
         },
+        timestamp() {
+            let timestamp;
+            if (this.post.createdAt == "maintenant") { 
+                timestamp = "maintenant"; 
+                } else {
+                    let t = this.post.createdAt.split(/[- :]/);
+                    let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+                    timestamp = d.toLocaleString(); 
+                }
+            return timestamp;
+        },
     },
     async created() {
         this.comments = await this.getComments();
         this.count = await this.counter();
         this.user = await this.whoAmI();
-        this.idsMatch();
+        this.match = this.idsMatch();
         await this.whoIsTheAuthor();
         this.postLikedByCurrentUser = await this.getOneLike();
+        this.postInterval = this.timestamp();
+        console.log(this.postInterval);
+
     },
 };
 </script>

@@ -62,6 +62,7 @@ export default {
                 return res.json();
             });
             const newBornPost = res.data;
+            newBornPost.createdAt = "maintenant"
             this.posts = [newBornPost, ...this.posts];
         },
         async deletePost(id) {
