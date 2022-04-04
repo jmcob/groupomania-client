@@ -18,6 +18,7 @@
                         cols="55"
                         v-model="text"
                         name="textLabel"
+                        maxlength="1000"
                     >
                     </textarea>
                 </div>

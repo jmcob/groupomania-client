@@ -13,6 +13,7 @@
                     v-model="title"
                     name="titleLabel"
                     aria-label="postTitle"
+                    maxlength="255"
                 />
                 <br />
                 <label for="textLabel">Texte du post </label>
@@ -22,6 +23,7 @@
                     v-model="text"
                     name="textLabel"
                     aria-label="postContent"
+                    maxlength="1000"
                 >
                 </textarea>
                 <br />

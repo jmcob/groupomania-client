@@ -88,22 +88,24 @@ export default {
                 alert("Erreur dans la suppression du post");
             }
         },
-        async updatePost(id, update) {
+        async updatePost(id, update, image) {
             const postToUpdate = await this.getOne(id);
             const json = {
-                ...postToUpdate,
                 text: update,
                 poster_id: postToUpdate.user_id,
                 user_id: this.user.user_id,
                 admin: this.user.admin,
             };
+            let formData = new FormData();
+            formData.append("image", image);
+            const jsonStr = JSON.stringify(json);
+            formData.append("post", jsonStr);
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "PUT",
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: "Bearer " + this.user.token,
                 },
-                body: JSON.stringify(json),
+                body: formData,
             }).then((res) => {
                 return res.json();
             });
@@ -111,15 +113,17 @@ export default {
                 this.posts = this.posts.map((post) =>
                     post.id === res.data.id
                         ? {
-                              ...post,
-                              text: res.data.text,
-                          }
+                            ...post,
+                            text: res.data.text,
+                            image: res.data.image
+                        }
                         : post
                 );
             } else {
                 alert("Erreur dans la modification du post");
             }
         },
+
         async getOne(id) {
             const data = await fetch(
                 "http://localhost:3000/api/post/" + id

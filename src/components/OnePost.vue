@@ -28,8 +28,20 @@
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
-                <div class="img" v-if="post.image">
-                    <img :src="post.image" alt="image postée" />
+                <div v-if="hard">
+                    <div class="img" v-if="post.image">
+                        <img :src="post.image" alt="image postée" />
+                    </div>
+                </div>
+                <div v-else> 
+                    <input
+                    class="file-input"
+                    type="file"
+                    accept="image/*"
+                    name="image"
+                    ref="image"
+                    @change="handleFileUpload($event)"
+                />
                 </div>
                 <div class="buttonContainer">
                     <div v-if="this.user">
@@ -62,7 +74,7 @@
                         <div class="button" v-else>
                             <p
                                 @click="
-                                    $emit('update-post', post.id, updatedText),
+                                    $emit('update-post', post.id, updatedText, form.image),
                                         (hard = !hard)
                                 "
                             >
@@ -121,6 +133,7 @@ export default {
             postLikedByCurrentUser: false,
             match: Boolean,
             postInterval: "",
+            form: {image: ""},
             user: {
                 token: "",
                 logged: false,
@@ -150,6 +163,9 @@ export default {
             const newBornComment = res.data;
             newBornComment.createdAt = "maintenant";
             this.comments = [newBornComment, ...this.comments];
+        },
+        handleFileUpload(e) {
+            this.form.image = e.target.files[0];
         },
         async getComments() {
             const res = await fetch("http://localhost:3000/api/comment/").then(
@@ -273,8 +289,6 @@ export default {
         await this.whoIsTheAuthor();
         this.postLikedByCurrentUser = await this.getOneLike();
         this.postInterval = this.timestamp();
-        console.log(this.postInterval);
-
     },
 };
 </script>
