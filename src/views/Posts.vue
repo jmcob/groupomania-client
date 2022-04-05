@@ -62,7 +62,7 @@ export default {
                 return res.json();
             });
             const newBornPost = res.data;
-            newBornPost.createdAt = "maintenant"
+            newBornPost.createdAt = "maintenant";
             this.posts = [newBornPost, ...this.posts];
         },
         async deletePost(id) {
@@ -100,6 +100,9 @@ export default {
             formData.append("image", image);
             const jsonStr = JSON.stringify(json);
             formData.append("post", jsonStr);
+            for (let i of formData) {
+                console.log(i);
+            }
             const res = await fetch("http://localhost:3000/api/post/" + id, {
                 method: "PUT",
                 headers: {
@@ -113,10 +116,10 @@ export default {
                 this.posts = this.posts.map((post) =>
                     post.id === res.data.id
                         ? {
-                            ...post,
-                            text: res.data.text,
-                            image: res.data.image
-                        }
+                              ...post,
+                              text: res.data.text,
+                              image: res.data.image,
+                          }
                         : post
                 );
             } else {

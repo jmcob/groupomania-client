@@ -10,7 +10,8 @@
                             :src="this.poster.avatar"
                             alt="image de l'auteur du post"
                         />
-                        <em>{{ this.poster.username }}</em>,
+                        <em>{{ this.poster.username }}</em
+                        >,
                         {{ this.postInterval }}
                     </h3>
                 </div>
@@ -28,21 +29,23 @@
                         placeholder="insérez un texte"
                     ></textarea>
                 </div>
+                <br />
                 <div v-if="hard">
                     <div class="img" v-if="post.image">
                         <img :src="post.image" alt="image postée" />
                     </div>
                 </div>
-                <div v-else> 
+                <div v-else>
                     <input
-                    class="file-input"
-                    type="file"
-                    accept="image/*"
-                    name="image"
-                    ref="image"
-                    @change="handleFileUpload($event)"
-                />
+                        class="file-input"
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        ref="image"
+                        @change="handleFileUpload($event)"
+                    />
                 </div>
+                <br />
                 <div class="buttonContainer">
                     <div v-if="this.user">
                         <div
@@ -74,7 +77,12 @@
                         <div class="button" v-else>
                             <p
                                 @click="
-                                    $emit('update-post', post.id, updatedText, form.image),
+                                    $emit(
+                                        'update-post',
+                                        post.id,
+                                        updatedText,
+                                        form.image
+                                    ),
                                         (hard = !hard)
                                 "
                             >
@@ -133,14 +141,14 @@ export default {
             postLikedByCurrentUser: false,
             match: Boolean,
             postInterval: "",
-            form: {image: ""},
+            form: { image: "" },
             user: {
                 token: "",
                 logged: false,
                 user_id: Number,
                 username: "",
                 email: "",
-                admin: Boolean
+                admin: Boolean,
             },
         };
     },
@@ -271,13 +279,15 @@ export default {
         },
         timestamp() {
             let timestamp;
-            if (this.post.createdAt == "maintenant") { 
-                timestamp = "maintenant"; 
-                } else {
-                    let t = this.post.createdAt.split(/[- :]/);
-                    let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
-                    timestamp = d.toLocaleString(); 
-                }
+            if (this.post.createdAt == "maintenant") {
+                timestamp = "maintenant";
+            } else {
+                let t = this.post.createdAt.split(/[- :]/);
+                let d = new Date(
+                    Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5])
+                );
+                timestamp = d.toLocaleString();
+            }
             return timestamp;
         },
     },
@@ -330,7 +340,7 @@ export default {
 }
 .text_buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
